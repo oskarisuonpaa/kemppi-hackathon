@@ -6,6 +6,7 @@ import { dataRouter } from "./controllers/data";
 import { loginRouter } from "./controllers/login";
 import mongoose from "mongoose";
 import * as middleware from "./utils/middleware";
+import { visitorRouter } from "./controllers/visitor";
 
 dotenv.config();
 
@@ -44,5 +45,6 @@ app.get("/health", (_req: Request, res: Response) => {
 app.use("/api/data", middleware.tokenExtractor, middleware.userExtractor, dataRouter);
 app.use("/api/users", middleware.tokenExtractor, middleware.userExtractor, usersRouter);
 app.use("/api/login", loginRouter);
+app.use("/api/visitor", visitorRouter);
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
