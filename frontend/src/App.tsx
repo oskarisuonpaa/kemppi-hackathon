@@ -10,6 +10,7 @@ import { useAuth } from "./utils/authContext";
 import { Kayttaja, InitialKayttaja } from './types'
 import LoginSection from './components/LoginSection'
 import ChartSection from './components/ChartSection'
+import VisitorSection from './components/visitorSection'
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
       <NavBar></NavBar>
       <MainSection></MainSection>
       <LoginSection nimi={kayttajatunnus} role={role}></LoginSection>
+      {role === "visitor" && <VisitorSection></VisitorSection>}
       <ChartSection></ChartSection>
       <AboutSection></AboutSection>
       <ServicesSection></ServicesSection>

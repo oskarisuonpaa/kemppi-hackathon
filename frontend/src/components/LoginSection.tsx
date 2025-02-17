@@ -44,6 +44,16 @@ const LoginSection: React.FC<Props> = ({ nimi, role }) => {
         window.location.reload();
     };
 
+    const handleClickVisitor = () => {
+        console.log("Visitor clicked");
+        if (localStorage.getItem("role") == "visitor") {
+            localStorage.setItem("role", "")
+        } else {
+            localStorage.setItem("role", "visitor");
+        }
+        window.location.reload();
+    }
+
     useEffect(() => {
         const token = localStorage.getItem("authToken");
         if (token && checkTokenValidity(token)) {
@@ -58,7 +68,9 @@ const LoginSection: React.FC<Props> = ({ nimi, role }) => {
             {isAuthenticated && nimi !== "" ?
                 <>Tervetuloa, {nimi} {role}!
                     <button className="logout" onClick={handleLogout}>Logout</button>
-                </> : <>
+                </> : localStorage.getItem("role") === "visitor" ? 
+                <><button onClick={handleClickVisitor}>Login to see more data</button></> : 
+                <>
                     <p>Kirjaudu {message}</p>
                     <form onSubmit={handleSubmit}>
                         <div>
@@ -97,6 +109,7 @@ const LoginSection: React.FC<Props> = ({ nimi, role }) => {
                         <button type="submit" style={{ backgroundColor: 'blue', color: 'white', width: '100%', marginTop: '1rem' }}>
                             Login
                         </button>
+                        <button onClick={handleClickVisitor}>Continue as visitor</button>
                     </form>
                 </>}
         </div>
