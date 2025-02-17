@@ -1,25 +1,42 @@
-import express, {Express, Request, Response} from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import { usersRouter } from './controllers/users';
-import { dataRouter } from './controllers/data';
+import express, { Express, Request, Response } from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { usersRouter } from "./controllers/users";
+import { dataRouter } from "./controllers/data";
+import mongoose from "mongoose";
 
 dotenv.config();
 
 const app: Express = express();
 const PORT: string | number = process.env.PORT || 5000;
 
+const connectDB = async () => {
+  try {
+    if (!process.env.DATABASE_URI) {
+      throw new Error("DATABASE_URI is not defined");
+    }
+
+    await mongoose.connect(process.env.DATABASE_URI);
+    console.log("Connected to the database");
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World');
+app.get("/health", (_req: Request, res: Response) => {
+  res.status(200).send("OK");
 });
 
-app.use('/api/data', dataRouter);
-app.use('/api/users', usersRouter);
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+app.use("/api/data", dataRouter);
+app.use("/api/users", usersRouter);
