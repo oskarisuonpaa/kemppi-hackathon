@@ -35,14 +35,14 @@ connectDB().then(() => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(middleware.requestLogger)
+app.use(middleware.requestLogger);
 
 app.get("/health", (_req: Request, res: Response) => {
   res.status(200).send("OK");
 });
 
 app.use("/api/data", middleware.tokenExtractor, middleware.userExtractor, dataRouter);
-app.use("/api/users", usersRouter);
+app.use("/api/users", middleware.tokenExtractor, middleware.userExtractor, usersRouter);
 app.use("/api/login", loginRouter);
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
