@@ -1,7 +1,19 @@
+body{
+  font-family: tk-proxima-nova-n7, sans-serif;
+}
+
+.tk-proxima-nova {
+  font-family: "proxima-nova", sans-serif;
+}
+
+.tk-myriad-pro {
+  font-family: "myriad-pro", sans-serif;
+}
+
 /* hero background image */
 .bgimage {
   height: 100vh;
-  background: url("/images/back_image.jpg");
+  background: url("/images/back_image.jpg") center center;
   background-size: cover;
   position: relative;
 }
@@ -9,6 +21,7 @@
 /* text css above hero image*/
 .hero_title {
   font-size: 4.5rem;
+  /* margin-top: 300px; */
 }
 
 .hero_desc {
@@ -18,7 +31,7 @@
 .hero-text {
   text-align: center;
   position: absolute;
-  top: 50%;
+  top: 600px;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
@@ -85,22 +98,19 @@
   /* height: 550px; */
 }
 
-/* .cardbody {
-  height: 215px;
-} */
-
 .card:hover {
-  border: 2px solid rgb(5, 44, 101);
+  border: 2px solid rgb(245, 115, 0);
 }
 
 .servicesText {
-  border: 2px solid #b8b8b8;
-  color: #565656;
+  border: 2px solid rgb(178, 178, 178);
+  color: rgb(76, 76, 76);
 }
 
 .servicesText:hover {
-  border: 2px solid rgb(5, 44, 101);
-  color: rgb(5, 44, 101);
+  border: 2px solid rgb(245, 115, 0);
+  color: rgb(245, 115, 0);
+
 }
 
 /* social media icons styling */
@@ -136,7 +146,3 @@
   padding-bottom: 4rem;
 }
 
-/* own colors  */
-.bg-dark-blue {
-  background-color: rgb(5, 44, 101);
-}
