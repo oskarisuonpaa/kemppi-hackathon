@@ -16,13 +16,35 @@ export const dataRouter = Router();
  */
 dataRouter.get("/", async (req: Request, res: Response) => {
   try {
-    const { model, currentMin, currentMax, voltageMin, voltageMax, startDate, endDate } =
-      req.query as Record<string, string>;
+    const {
+      model,
+      serial,
+      name,
+      group,
+      currentMin,
+      currentMax,
+      voltageMin,
+      voltageMax,
+      startDate,
+      endDate,
+    } = req.query as Record<string, string>;
 
     const filter: Record<string, any> = {};
 
     if (model) {
       filter["weldingMachine.model"] = model;
+    }
+
+    if (serial) {
+      filter["weldingMachine.serial"] = serial;
+    }
+
+    if (name) {
+      filter["weldingMachine.name"] = name;
+    }
+
+    if (group) {
+      filter["weldingMachine.group"] = group;
     }
 
     if (currentMin || currentMax) {
