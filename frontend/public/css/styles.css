@@ -1,3 +1,21 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: tk-proxima-nova-n7, sans-serif;
+}
+
+.tk-proxima-nova {
+  font-family: "proxima-nova", sans-serif;
+}
+
+.tk-myriad-pro {
+  font-family: "myriad-pro", sans-serif;
+}
+
 /* hero background image */
 .bgimage {
   height: 100vh;
@@ -89,18 +107,20 @@
   height: 215px;
 } */
 
+
 .card:hover {
-  border: 2px solid rgb(5, 44, 101);
+  border: 2px solid rgb(245, 115, 0);
 }
 
 .servicesText {
-  border: 2px solid #b8b8b8;
-  color: #565656;
+  border: 2px solid rgb(178, 178, 178);
+  color: rgb(76, 76, 76);
 }
 
 .servicesText:hover {
-  border: 2px solid rgb(5, 44, 101);
-  color: rgb(5, 44, 101);
+  border: 2px solid rgb(245, 115, 0);
+  color: rgb(245, 115, 0);
+
 }
 
 /* social media icons styling */
