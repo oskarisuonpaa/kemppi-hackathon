@@ -171,7 +171,6 @@ dataRouter.delete("/:id", async (req: Request, res: Response) => {
 /**
  * PUT /api/data/:id
  */
-
 dataRouter.put("/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

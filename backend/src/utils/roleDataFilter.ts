@@ -1,3 +1,12 @@
+/**
+ *
+ * @param role role of the user.
+ * @param data data from database to be filtered.
+ * @returns filteredData based on the role of the user.
+ *
+ * This function filters data based on the role of the user.
+ */
+
 export const roleDataFilter = (role: string, data: any[]) => {
   let filteredData = data.map((item) => {
     return typeof item.toObject === "function" ? item.toObject() : item;
