@@ -5,7 +5,7 @@ import { usersRouter } from "./controllers/users";
 import { dataRouter } from "./controllers/data";
 import { loginRouter } from "./controllers/login";
 import mongoose from "mongoose";
-import { unknownEndpoint } from "./utils/middleware";
+import * as middleware from "./utils/middleware";
 
 dotenv.config();
 
@@ -35,12 +35,14 @@ connectDB().then(() => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(middleware.requestLogger)
 
 app.get("/health", (_req: Request, res: Response) => {
   res.status(200).send("OK");
 });
 
-app.use("/api/data", dataRouter);
+app.use("/api/data", middleware.tokenExtractor, middleware.userExtractor, dataRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
-app.use(unknownEndpoint);
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
