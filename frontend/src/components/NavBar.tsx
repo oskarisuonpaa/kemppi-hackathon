@@ -24,6 +24,9 @@ const NavBar: React.FC<props> = () => {
               <li className="nav-item">
                 <a className="nav-link tk-proxima-nova" href="#services">Services</a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link tk-proxima-nova" href="#contact">Contact service</a>
+              </li>
             </ul>
           </div>
         </div>
