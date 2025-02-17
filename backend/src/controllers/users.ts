@@ -1,6 +1,7 @@
 import {Router,  Request, Response } from 'express';
 import User from '../models/user';
 import bcrypt from 'bcrypt';
+import * as middleware from "../utils/middleware";
 
 const hashedPassword = async (password: string) => {
     const saltRounds = 10
@@ -9,24 +10,45 @@ const hashedPassword = async (password: string) => {
 }
 export const usersRouter = Router();
 
-usersRouter.get('/', async (req: Request, res: Response) => {
-    const users = await User.find({})
-    res.json(users)
+usersRouter.get("/", async (req: Request, res: Response) => {
+  const users = await User.find({});
+  res.json(users);
 });
 
 // Create new user
-usersRouter.post('/', async (req: Request, res: Response) => {
-    console.log(req.body)
-    const { username, name, password } = req.body
-    console.log(password.length)
+usersRouter.post(
+    "/",
+    middleware.tokenExtractor,
+    middleware.userExtractor,
+    async (req: Request, res: Response) => {
+      try {
+        const { username, name, password } = req.body;
+  
+        if (!password) {
+          res.status(400).json({ error: "Password is required" });
+          return;
+        }
+  
+        //    - At least 8 chars
+        //    - 1 uppercase
+        //    - 1 lowercase
+        //    - 1 digit
+        //    - 1 special char
+        const strongPasswordRegex =
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  
+        if (!strongPasswordRegex.test(password)) {
+          res.status(400).json({
+            error:
+              "Password must be at least 8 characters long and contain uppercase, lowercase, digit, and special character",
+          });
+          return;
+        }
+  
+        const saltRounds = 10;
+        const passwordHash = await hashedPassword(password)
 
-    if (password.length < 3) {
-        res.status(400).json({ error: 'Password must be at least 3 characters long' })
-    }
-    const passwordHash = await hashedPassword(password)
-    
-
-    const user = new User({
+      const user = new User({
         username,
         name,
         passwordHash

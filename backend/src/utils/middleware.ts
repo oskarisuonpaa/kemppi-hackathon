@@ -48,6 +48,7 @@ const tokenExtractor = (req: CustomRequest, res: Response, next: NextFunction) =
     req.token = authorization.replace("Bearer ", "");
   } else {
     res.status(401).json({ error: "Unauthorized" });
+    return;
   }
   next();
 };
