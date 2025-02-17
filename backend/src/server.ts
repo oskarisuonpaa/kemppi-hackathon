@@ -2,6 +2,7 @@ import express, {Express, Request, Response} from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { usersRouter } from './controllers/users';
+import { dataRouter } from './controllers/data';
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Hello World');
 });
 
-//app.use('/api/data', require('./controllers/data'));
+app.use('/api/data', dataRouter);
 app.use('/api/users', usersRouter);
 
 app.listen(PORT, () => {
