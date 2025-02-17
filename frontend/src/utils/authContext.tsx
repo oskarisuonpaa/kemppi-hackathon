@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface AuthContextType {
+  role: string | null;
   kayttajatunnus: string | null;
   setKayttajatunnus: React.Dispatch<React.SetStateAction<string | null>>;
+  setRole: React.Dispatch<React.SetStateAction<string | null>>;
   isAuthenticated: boolean;
 }
 
@@ -23,19 +25,22 @@ interface Props {
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const initialUsername = localStorage.getItem("username");
   const initialToken = localStorage.getItem("authToken");
+  const initialRole = localStorage.getItem("role")
 
   const [kayttajatunnus, setKayttajatunnus] = useState<string | null>(initialUsername);
+  const [role, setRole] = useState<string | null>(initialRole);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!initialToken);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
     if (initialToken) {
       setIsAuthenticated(true);
       setKayttajatunnus(initialUsername);
+      setRole(initialRole)
+      console.log("initial" + initialUsername + initialRole)
     }
-  }, [initialToken, initialUsername]);
+  }, [initialToken, initialUsername, initialRole]);
 
   return (
-    <AuthContext.Provider value={{ kayttajatunnus, setKayttajatunnus, isAuthenticated }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ kayttajatunnus, setKayttajatunnus, isAuthenticated, role, setRole }}>{children}</AuthContext.Provider>
   )
 };
