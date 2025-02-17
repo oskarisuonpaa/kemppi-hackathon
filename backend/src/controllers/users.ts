@@ -35,7 +35,7 @@ usersRouter.post(
         //    - 1 digit
         //    - 1 special char
         const strongPasswordRegex =
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+          /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
   
         if (!strongPasswordRegex.test(password)) {
           res.status(400).json({
@@ -46,18 +46,23 @@ usersRouter.post(
         }
   
         const saltRounds = 10;
-        const passwordHash = await hashedPassword(password)
-
-      const user = new User({
-        username,
-        name,
-        passwordHash
-    })
-
-    const savedUser = await user.save()
-
-    res.status(201).json(savedUser)
-});
+        const passwordHash = await bcrypt.hash(password, saltRounds);
+  
+        const user = new User({
+          username,
+          name,
+          passwordHash,
+        });
+  
+        const savedUser = await user.save();
+  
+        res.status(201).json(savedUser);
+        return;
+      } catch (error) {
+        console.error("Error creating user:", error);
+        res.status(500).json({ error: "Internal server error" });
+      }
+    });
 
 // Update user
 
