@@ -6,7 +6,7 @@ import AboutSection from './components/AboutSection'
 import FooterSection from './components/FooterSection'
 import MainSection from './components/MainSection'
 import ServicesSection from './components/ServicesSection'
-import './App.css'
+// import './App.css'
 
 function App() {
 
