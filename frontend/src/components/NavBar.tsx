@@ -24,9 +24,6 @@ const NavBar: React.FC<props> = () => {
               <li className="nav-item">
                 <a className="nav-link" href="#services">Services</a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#contact">Contact</a>
-              </li>
             </ul>
           </div>
         </div>
