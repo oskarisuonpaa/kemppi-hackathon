@@ -29,13 +29,14 @@ usersRouter.post(
         return;
       }
 
-      //    - At least 8 chars
-      //    - 1 uppercase
-      //    - 1 lowercase
-      //    - 1 digit
-      //    - 1 special char
+      // Password must have:
+      // - At least 8 characters
+      // - At least one uppercase letter
+      // - At least one lowercase letter
+      // - At least one digit
+      // - At least one special character (@, $, !, %, *, ?, &)
       const strongPasswordRegex =
-        /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
       if (!strongPasswordRegex.test(password)) {
         res.status(400).json({
@@ -57,7 +58,6 @@ usersRouter.post(
       const savedUser = await user.save();
 
       res.status(201).json(savedUser);
-      return;
     } catch (error) {
       console.error("Error creating user:", error);
       res.status(500).json({ error: "Internal server error" });
