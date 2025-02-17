@@ -63,8 +63,15 @@ const userExtractor = async (req: CustomRequest, res: Response, next: NextFuncti
     return;
   }
 
-  const decodedToken = jwt.verify(req.token, process.env.SECRET);
-  if (typeof decodedToken === "string" || !decodedToken.id) {
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(req.token, process.env.SECRET);
+  } catch (error) {
+    res.status(401).json({ error: "token expired or invalid" });
+    return;
+  }
+
+  if (!decodedToken || typeof decodedToken === "string") {
     res.status(401).json({ error: "token invalid" });
     return;
   }
