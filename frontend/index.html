@@ -1,13 +1,198 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <title>Kemppi Hackathon 2025</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- linking css file -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <!-- navnbar section-->
+  <nav class="navbar navbar-expand-lg fixed-top navbarScroll navbar-dark">
+    <div class="container">
+      <a class="navbar-brand display-2" href="#">Team Name</a>
+      <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">Data</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#services">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav><!-- navnbar section end-->
+  <!-- main section -->
+  <section class="bgimage" id="home">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hero-text">
+          <h2 class="hero_title">Hi, it's our team.</h2>
+          <p class="hero_desc">We are at the Kemppi 2025 hackathon.</p>
+        </div>
+      </div>
+    </div>
+  </section><!-- main section end-->
+  <!-- about section-->
+  <section id="about">
+    <div class="container mt-4 pt-4">
+      <h1 class="text-center">Data</h1>
+      <div class="row mt-4 m-auto">
+        <div class="col-lg-8 p-4">
+          <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi eius placeat veritatis commodi odit ipsum hic repellendus tempora reprehenderit voluptates iste dolor similique quos velit accusantium alias tempore beatae, delectus sunt magni optio perferendis dolores! Enim deleniti amet nam quibusdam? Quibusdam nihil autem ad. Fugit molestiae debitis inventore omnis quasi?
+          </p>
+          <div class="progress mt-2 mb-2" role="progressbar" aria-label="Warning striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 24px">
+            <div class="progress-bar progress-bar-striped bg-dark" style="width: 70%">Lorem</div>
+          </div>
+          <div class="progress mt-2 mb-2" role="progressbar" aria-label="Warning striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 24px">
+            <div class="progress-bar progress-bar-striped bg-dark" style="width: 85%">Lorem</div>
+          </div>
+          <div class="progress mt-2 mb-2" role="progressbar" aria-label="Warning striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 24px">
+            <div class="progress-bar progress-bar-striped bg-dark" style="width: 75%">Lorem</div>
+          </div>
+          <div class="progress mt-2 mb-2" role="progressbar" aria-label="Warning striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 24px">
+            <div class="progress-bar progress-bar-striped bg-dark" style="width: 80%">Lorem</div>
+          </div>
+          <div class="progress mt-2 mb-2" role="progressbar" aria-label="Warning striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 24px">
+            <div class="progress-bar progress-bar-striped bg-dark" style="width: 90%">Lorem</div>
+          </div>
+          <div class="row text-end">
+            <small class="cap">Lorem ipsum dolor sit amet</small>
+          </div>
+  </section><!-- about section end-->
+  <!-- root section -->
+  <!-- <div id="root"></div> -->
+   <!-- root section end -->
+
+
+  <!-- services section-->
+  <section id="services">
+    <div class="container">
+      <h1 class="text-center">Services</h1>
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mt-4">
+          <div class="card servicesText">
+            <div class="card-body">
+              <i class="servicesIcon bi bi-clock-fill"></i>
+              <h4 class="card-title mt-3">Lorem ipsum</h4>
+              <p class="card-text mt-3 h6">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, deleniti a. Harum veniam in sunt ipsum officiis reiciendis unde! Minima ab velit temporibus numquam, tempora iure libero autem error cum.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mt-4">
+          <div class="card servicesText">
+            <div class="card-body">
+              <i class="servicesIcon bi bi-stack"></i>
+              <h4 class="card-title mt-3">Lorem ipsum</h4>
+              <p class="card-text mt-3 h6">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore facere praesentium laudantium animi voluptatem, odit fugiat quae iusto et asperiores nam! Fuga id corrupti asperiores praesentium dolorem, tempore recusandae libero!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mt-4">
+          <div class="card servicesText">
+            <div class="card-body">
+              <i class="servicesIcon bi bi-check-circle"></i>
+              <h4 class="card-title mt-3">Lorem ipsum</h4>
+              <p class="card-text mt-3 h6">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia reprehenderit consectetur, in consequuntur molestias, voluptas voluptatem hic porro provident rerum perferendis perspiciatis soluta distinctio, doloremque aperiam quod voluptatibus aliquam necessitatibus?
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mt-4">
+          <div class="card servicesText">
+            <div class="card-body">
+              <i class="servicesIcon bi bi-search"></i>
+              <h4 class="card-title mt-3">Lorem ipsum</h4>
+              <p class="card-text mt-3 h6">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum quae aliquid, quis repellat qui similique magni, magnam dolores eveniet porro quod veniam accusantium non exercitationem, fugiat minus reprehenderit dolorem pariatur?
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mt-4">
+          <div class="card servicesText">
+            <div class="card-body">
+              <i class="servicesIcon bi bi-shield-shaded"></i>
+              <h4 class="card-title mt-3">Lorem ipsum</h4>
+              <p class="card-text mt-3 h6">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi voluptatem voluptatum esse et voluptatibus doloremque. Quisquam odio, corrupti alias optio eius corporis facere rem officia laborum quis quod cum harum.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mt-4">
+          <div class="card servicesText">
+            <div class="card-body">
+              <i class="servicesIcon bi bi-wrench-adjustable-circle"></i>
+              <h4 class="card-title mt-3">Lorem ipsum</h4>
+              <p class="card-text mt-3 h6">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci porro quae neque corrupti, cumque autem laboriosam minima eveniet, a similique perspiciatis ab deserunt quibusdam itaque est harum delectus asperiores dolor.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><!-- services section end-->
+
+  <!-- contact section-->
+  <section id="contact">
+    <div class="container mt-3 contactContent">
+      <h1 class="text-center">Contact Us</h1>
+      <div class="row mt-4">
+        <div class="col-lg-6 mb-3 mt-3">
+          <!-- form fields -->
+          <form action="" method="POST">
+            <input type="email" class="form-control mt-3" placeholder="Email" name="email">
+            <div class="mb-3 mt-4">
+              <textarea class="form-control" rows="5" id="comment" name="message" placeholder="Project Details"></textarea>
+            </div>
+          </form>
+          <div class="d-flex justify-content-lg-start justify-content-center mt-4">
+            <button type="submit" class="btn btn-outline-dark btn-lg">Contact Us</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><!-- contact section end-->
+  <!-- footer section-->
+  <footer id="footer">
+    <div class="container-fluid">
+      <!-- social media icons -->
+      <div class="social-icons mt-4">
+        <a href="https://www.linkedin.com/" target="_blank"><i class="footer-icon bi bi-linkedin ms-3 me-3"></i></a>
+        <a href="https://github.com/" target="_blank"><i class="footer-icon bi bi-github ms-3 me-3"></i></a>
+      </div>
+    </div>
+  </footer><!-- footer section end-->
+  <!-- bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="script/script.js"></script>
+
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
