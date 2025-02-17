@@ -7,5 +7,7 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "./dist",
-  }
+    "types": ["jest"],
+  },
+  "include": ["src/**/*.ts", "tests/**/*.test.ts"]
 }
