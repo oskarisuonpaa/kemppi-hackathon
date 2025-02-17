@@ -1,12 +1,6 @@
 import { Router, Request, Response } from "express";
 import { WeldingData } from "../models/weldingData";
 import { roleDataFilter } from "../utils/roleDataFilter";
-import {
-  mostUsedWeldingMachine,
-  totalWeldsLastWeek,
-  totalWireConsumed,
-  averageWeldDuration,
-} from "../utils/dataHelper";
 
 export const dataRouter = Router();
 
