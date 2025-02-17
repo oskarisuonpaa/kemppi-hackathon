@@ -31,8 +31,10 @@ const LoginSection: React.FC<Props> = ({nimi}) => {
         try {
             const response = await axios.post(`${backendUrl}/api/login`, { username, password });
             console.log("response got.")
+            console.log(response.data.token, username)
             localStorage.setItem("authToken", response.data.token);
             localStorage.setItem("username", username);
+
             setKayttajatunnus(username);
             setMessage("Login successful");
             navigate("/");
@@ -57,7 +59,7 @@ const LoginSection: React.FC<Props> = ({nimi}) => {
 
     return (
         <div className="App">Moi
-            <p>Kirjaudu {message}</p>
+            <p>Kirjaudu {message} {username}</p>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="username">Käyttäjätunnus</label>
@@ -98,7 +100,7 @@ const LoginSection: React.FC<Props> = ({nimi}) => {
             </form>
             {isAuthenticated && nimi !== "" && (
                 <>Tervetuloa, {nimi}!
-                  <button className="logout" onClick={handleLogout}>Log out</button>
+                  <button className="logout" onClick={handleLogout}>Logout</button>
                 </>
               )}
         </div>
