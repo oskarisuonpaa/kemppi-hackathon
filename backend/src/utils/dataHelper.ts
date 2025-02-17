@@ -24,7 +24,7 @@ export const totalWireConsumed = (data: any[]) => {
     return acc;
   }, 0);
 
-  return totalWire.toFixed(2);
+  return totalWire.toFixed(2).toString()+ ' m';
 }
 
 export const averageWeldDuration = (data: any[]) => {
@@ -33,5 +33,5 @@ export const averageWeldDuration = (data: any[]) => {
     return acc/1000;
   }, 0);
 
-  return (totalDuration / data.length).toFixed(2);
+  return (totalDuration / data.length).toFixed(2).toString() + ' s';
 }
