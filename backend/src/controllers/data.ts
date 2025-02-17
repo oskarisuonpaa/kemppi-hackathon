@@ -1,7 +1,24 @@
 import {Router, Request, Response } from 'express';
+import {WeldingData} from '../models/weldingData';
 
 export const dataRouter = Router();
 
-dataRouter.get('/', (req: Request, res: Response) => {
-    res.send('Hello from data');
+// @TODO: Implement user restrictions
+
+dataRouter.get('/', async (req: Request, res: Response) => {
+    try {
+        const {model} = req.query as {[key: string]: string};
+
+
+        const filter: any = {};
+
+        if (model) {
+            filter['weldingMachine.model'] = model;
+        }
+
+        res.json(filter);
+    } catch (error) {
+        
+    }
 });
+
