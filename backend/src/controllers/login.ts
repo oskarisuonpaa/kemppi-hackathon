@@ -10,10 +10,11 @@ interface UserType {
     passwordHash: string;
     _id: string;
     name: string;
+    role: string;
 }
 
 loginRouter.post('/', async (request: express.Request, response: express.Response) => {
-    
+
     const { username, password } = request.body;
 
     const user: UserType | null = await User.findOne({ username });
@@ -35,5 +36,5 @@ loginRouter.post('/', async (request: express.Request, response: express.Respons
 
     const token = jwt.sign(userForToken, process.env.SECRET as string, { expiresIn: 60 * 60 });
 
-    response.status(200).send({ token, username: user.username, name: user.name });
+    response.status(200).send({ token, username: user.username, name: user.name, role: user.role });
 });
