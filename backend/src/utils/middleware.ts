@@ -37,7 +37,7 @@ interface UserType {
 }
 
 interface CustomRequest extends Request {
-  token?: string;
+  token?: any;
   user?: any;
 }
 
@@ -47,21 +47,24 @@ const tokenExtractor = (req: CustomRequest, res: Response, next: NextFunction) =
   if (authorization && authorization.startsWith("Bearer")) {
     req.token = authorization.replace("Bearer ", "");
   } else {
-    return res.status(401).json({ error: "Unauthorized" });
+    res.status(401).json({ error: "Unauthorized" });
   }
   next();
 };
 
 // MW for getting user with bearer token
 const userExtractor = async (req: CustomRequest, res: Response, next: NextFunction) => {
-  if (!process.env.SECRET) return res.status(500);
-  if (!req.token) return res.status(401).json({ error: "token missing" });
+  if (!process.env.SECRET) {
+    res.status(500);
+    return
+  }
+  if (!req.token) res.status(401).json({ error: "token missing" });
   const decodedToken = jwt.verify(req.token, process.env.SECRET);
   if (typeof decodedToken === "string" || !decodedToken.id)
-    return res.status(401).json({ error: "token invalid" });
+    res.status(401).json({ error: "token invalid" });
   const user = await User.findById(decodedToken.id);
   if (!user) {
-    return res.status(404).json({ error: "user not found" });
+    res.status(404).json({ error: "user not found" });
   }
   req.user = user;
   next();

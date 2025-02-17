@@ -41,7 +41,7 @@ app.get("/health", (_req: Request, res: Response) => {
   res.status(200).send("OK");
 });
 
-app.use("/api/data", dataRouter);
+app.use("/api/data", middleware.tokenExtractor, middleware.userExtractor, dataRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use(middleware.unknownEndpoint);
