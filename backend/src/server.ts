@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { usersRouter } from "./controllers/users";
 import { dataRouter } from "./controllers/data";
+import { loginRouter } from "./controllers/login";
 import mongoose from "mongoose";
 import { unknownEndpoint } from "./utils/middleware";
 
@@ -41,4 +42,5 @@ app.get("/health", (_req: Request, res: Response) => {
 
 app.use("/api/data", dataRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/login", loginRouter);
 app.use(unknownEndpoint);
