@@ -22,7 +22,7 @@ usersRouter.post(
   middleware.userExtractor,
   async (req: Request, res: Response) => {
     try {
-      const { username, name, password } = req.body;
+      const { username, name, password, role } = req.body;
 
       if (!password) {
         res.status(400).json({ error: "Password is required" });
@@ -53,6 +53,7 @@ usersRouter.post(
         username,
         name,
         passwordHash,
+        role
       });
 
       const savedUser = await user.save();

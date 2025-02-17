@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { WeldingData } from "../models/weldingData";
 import { roleDataFilter } from "../utils/roleDataFilter";
+import { mostUsedWeldingMachine, totalWeldsLastWeek, totalWireConsumed } from "../utils/dataHelper";
 
 export const dataRouter = Router();
 
@@ -94,6 +95,13 @@ dataRouter.get("/", async (req: Request, res: Response) => {
     results.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
 
     const roleFilteredResults = roleDataFilter("admin", results);
+
+    const totalWelds = await totalWeldsLastWeek(results)
+    console.log("total welds last week",totalWelds)
+    const mostUsedMachine = await mostUsedWeldingMachine(results)
+    console.log("most used machine",mostUsedMachine)
+    const wireConsumed = await totalWireConsumed(results)
+    console.log("total wire consumed",wireConsumed)
 
     res.status(200).json(roleFilteredResults);
   } catch (error) {
