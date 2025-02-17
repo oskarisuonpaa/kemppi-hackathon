@@ -1,7 +1,11 @@
 import { Router, Request, Response } from "express";
 import { WeldingData } from "../models/weldingData";
 import { roleDataFilter } from "../utils/roleDataFilter";
-import { mostUsedWeldingMachine, totalWeldsLastWeek, totalWireConsumed } from "../utils/dataHelper";
+import {
+  mostUsedWeldingMachine,
+  totalWeldsLastWeek,
+  totalWireConsumed,
+} from "../utils/dataHelper";
 
 export const dataRouter = Router();
 
@@ -17,91 +21,91 @@ export const dataRouter = Router();
  *   &endDate=2025-01-31
  */
 dataRouter.get("/", async (req: Request, res: Response) => {
+  const {
+    model,
+    serial,
+    name,
+    group,
+    currentMin,
+    currentMax,
+    voltageMin,
+    voltageMax,
+    startDate,
+    endDate,
+  } = req.query as Record<string, string>;
+
+  const filter: Record<string, any> = {};
+
+  if (model) {
+    filter["weldingMachine.model"] = model;
+  }
+
+  if (serial) {
+    filter["weldingMachine.serial"] = serial;
+  }
+
+  if (name) {
+    filter["weldingMachine.name"] = name;
+  }
+
+  if (group) {
+    filter["weldingMachine.group"] = group;
+  }
+
+  if (currentMin || currentMax) {
+    const rangeObj: Record<string, number> = {};
+    if (currentMin) {
+      rangeObj.$gte = Number(currentMin);
+    }
+    if (currentMax) {
+      rangeObj.$lte = Number(currentMax);
+    }
+    if (Object.keys(rangeObj).length > 0) {
+      filter["weldingParameters.current.avg"] = rangeObj;
+    }
+  }
+
+  if (voltageMin || voltageMax) {
+    const rangeObj: Record<string, number> = {};
+    if (voltageMin) {
+      rangeObj.$gte = Number(voltageMin);
+    }
+    if (voltageMax) {
+      rangeObj.$lte = Number(voltageMax);
+    }
+    if (Object.keys(rangeObj).length > 0) {
+      filter["weldingParameters.voltage.avg"] = rangeObj;
+    }
+  }
+
+  if (startDate || endDate) {
+    const dateRange: Record<string, Date> = {};
+
+    if (startDate) {
+      dateRange.$gte = new Date(startDate);
+    }
+    if (endDate) {
+      dateRange.$lte = new Date(endDate);
+    }
+
+    if (Object.keys(dateRange).length > 0) {
+      filter.timestamp = dateRange;
+    }
+  }
+
   try {
-    const {
-      model,
-      serial,
-      name,
-      group,
-      currentMin,
-      currentMax,
-      voltageMin,
-      voltageMax,
-      startDate,
-      endDate,
-    } = req.query as Record<string, string>;
-
-    const filter: Record<string, any> = {};
-
-    if (model) {
-      filter["weldingMachine.model"] = model;
-    }
-
-    if (serial) {
-      filter["weldingMachine.serial"] = serial;
-    }
-
-    if (name) {
-      filter["weldingMachine.name"] = name;
-    }
-
-    if (group) {
-      filter["weldingMachine.group"] = group;
-    }
-
-    if (currentMin || currentMax) {
-      const rangeObj: Record<string, number> = {};
-      if (currentMin) {
-        rangeObj.$gte = Number(currentMin);
-      }
-      if (currentMax) {
-        rangeObj.$lte = Number(currentMax);
-      }
-      if (Object.keys(rangeObj).length > 0) {
-        filter["weldingParameters.current.avg"] = rangeObj;
-      }
-    }
-
-    if (voltageMin || voltageMax) {
-      const rangeObj: Record<string, number> = {};
-      if (voltageMin) {
-        rangeObj.$gte = Number(voltageMin);
-      }
-      if (voltageMax) {
-        rangeObj.$lte = Number(voltageMax);
-      }
-      if (Object.keys(rangeObj).length > 0) {
-        filter["weldingParameters.voltage.avg"] = rangeObj;
-      }
-    }
-
-    if (startDate || endDate) {
-      const dateRange: Record<string, Date> = {};
-
-      if (startDate) {
-        dateRange.$gte = new Date(startDate);
-      }
-      if (endDate) {
-        dateRange.$lte = new Date(endDate);
-      }
-
-      if (Object.keys(dateRange).length > 0) {
-        filter.timestamp = dateRange;
-      }
-    }
-
     const results = await WeldingData.find(filter);
 
     results.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
 
     const roleFilteredResults = roleDataFilter("admin", results);
 
-    const totalWelds = await totalWeldsLastWeek(results)
-    console.log("total welds last week",totalWelds)
-    const mostUsedMachine = await mostUsedWeldingMachine(results)
-    console.log("most used machine",mostUsedMachine)
-    const wireConsumed = await totalWireConsumed(results)
-    console.log("total wire consumed",wireConsumed)
+    const totalWelds = await totalWeldsLastWeek(results);
+    console.log("total welds last week", totalWelds);
+    const mostUsedMachine = await mostUsedWeldingMachine(results);
+    console.log("most used machine", mostUsedMachine);
+    const wireConsumed = await totalWireConsumed(results);
+    console.log("total wire consumed", wireConsumed);
 
     res.status(200).json(roleFilteredResults);
   } catch (error) {
