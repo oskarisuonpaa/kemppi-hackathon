@@ -11,7 +11,7 @@ const AboutSection: React.FC<props> = () => {
                 <div className="container mt-4 pt-4">
                     <h1 className="text-center">Data</h1>
                     <div className="row mt-4 m-auto">
-                        <div className="col-lg-8 p-4">
+                        <div className="row"> /* "col-lg-8 p-4" */
                             <p>
                                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi eius placeat veritatis commodi odit ipsum hic repellendus tempora reprehenderit voluptates iste dolor similique quos velit accusantium alias tempore beatae, delectus sunt magni optio perferendis dolores! Enim deleniti amet nam quibusdam? Quibusdam nihil autem ad. Fugit molestiae debitis inventore omnis quasi?
                             </p>
