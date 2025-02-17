@@ -3,6 +3,11 @@ import User from "../models/user";
 import bcrypt from "bcrypt";
 import * as middleware from "../utils/middleware";
 
+const hashedPassword = async (password: string) => {
+  const saltRounds = 10;
+  const passwordHash = await bcrypt.hash(password, saltRounds);
+  return passwordHash;
+};
 export const usersRouter = Router();
 
 usersRouter.get("/", async (req: Request, res: Response) => {
@@ -24,11 +29,12 @@ usersRouter.post(
         return;
       }
 
-      //    - At least 8 chars
-      //    - 1 uppercase
-      //    - 1 lowercase
-      //    - 1 digit
-      //    - 1 special char
+      // Password must have:
+      // - At least 8 characters
+      // - At least one uppercase letter
+      // - At least one lowercase letter
+      // - At least one digit
+      // - At least one special character (@, $, !, %, *, ?, &)
       const strongPasswordRegex =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -52,10 +58,35 @@ usersRouter.post(
       const savedUser = await user.save();
 
       res.status(201).json(savedUser);
-      return;
     } catch (error) {
       console.error("Error creating user:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   }
 );
+
+// Update user
+
+usersRouter.put("/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { username, name, password, role } = req.body;
+
+  const oldUser = await User.findById(id);
+  if (!oldUser) {
+    res.status(404).json({ error: "User not found" });
+    return;
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    id,
+    {
+      username: username ?? oldUser.username,
+      name: name ?? oldUser.name,
+      password: password ? await hashedPassword(password) : oldUser.passwordHash,
+      role: role ?? oldUser.role,
+    },
+    { new: true, runValidators: true, context: "query" }
+  );
+
+  res.json(updatedUser);
+});
