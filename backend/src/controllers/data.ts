@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { WeldingData } from "../models/weldingData";
+import { roleDataFilter } from "../utils/roleDataFilter";
 
 export const dataRouter = Router();
 
@@ -91,6 +92,8 @@ dataRouter.get("/", async (req: Request, res: Response) => {
     const results = await WeldingData.find(filter);
 
     results.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+
+    roleDataFilter("admin", results);
 
     res.status(200).json(results);
   } catch (error) {
