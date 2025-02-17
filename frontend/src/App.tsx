@@ -14,7 +14,7 @@ function App() {
 
   const [user, setUser] = useState<Kayttaja>(InitialKayttaja);
   const { kayttajatunnus } = useAuth();
-  const backendUrl = import.meta.env.REACT_APP_BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
   // Hae kirjautunut käyttäjä
   useEffect(() => {
@@ -42,9 +42,9 @@ function App() {
 
   return (
     <>
-      <LoginSection nimi={user.kayttajatunnus}></LoginSection>
       <NavBar></NavBar>
       <MainSection></MainSection>
+      <LoginSection nimi={user.kayttajatunnus}></LoginSection>
       <AboutSection></AboutSection>
       <ServicesSection></ServicesSection>
       <ContactSection></ContactSection>
