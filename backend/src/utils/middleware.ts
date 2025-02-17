@@ -1,4 +1,3 @@
-import * as logger from "./logger";
 import jwt from "jsonwebtoken";
 import User from "../models/user";
 import { Request, Response, NextFunction } from "express";
@@ -7,10 +6,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const requestLogger = (req: Request, res: Response, next: NextFunction) => {
-  logger.info("Method:", req.method);
-  logger.info("Path:  ", req.path);
-  logger.info("Body:  ", req.body);
-  logger.info("---");
+  console.log("Method:", req.method);
+  console.log("Path:  ", req.path);
+  console.log("Body:  ", req.body);
+  console.log("---");
   next();
 };
 
