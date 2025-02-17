@@ -46,5 +46,6 @@ app.use("/api/data", middleware.tokenExtractor, middleware.userExtractor, dataRo
 app.use("/api/users", middleware.tokenExtractor, middleware.userExtractor, usersRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/visitor", visitorRouter);
+
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
