@@ -104,6 +104,7 @@ const LoginSection: React.FC<Props> = ({ nimi, role }) => {
                                     onClick={togglePasswordVisibility}>
                                     {showPassword ? 'Hide' : 'Show'}
                                 </button>
+                                <button>continue as visitor</button>
                             </div>
                         </div>
                         <button type="submit" style={{ backgroundColor: 'blue', color: 'white', width: '100%', marginTop: '1rem' }}>

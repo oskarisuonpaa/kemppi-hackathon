@@ -87,7 +87,7 @@ dataRouter.get("/", async (req: Request, res: Response) => {
       filter.timestamp = dateRange;
     }
   }
-
+  console.log(filter);
   try {
     const results = await WeldingData.find(filter);
 
