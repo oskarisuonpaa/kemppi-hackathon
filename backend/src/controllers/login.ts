@@ -13,6 +13,7 @@ interface UserType {
 }
 
 loginRouter.post('/', async (request: express.Request, response: express.Response) => {
+    
     const { username, password } = request.body;
 
     const user: UserType | null = await User.findOne({ username });
