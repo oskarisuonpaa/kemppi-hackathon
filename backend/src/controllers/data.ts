@@ -93,9 +93,9 @@ dataRouter.get("/", async (req: Request, res: Response) => {
 
     results.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
 
-    roleDataFilter("admin", results);
+    const roleFilteredResults = roleDataFilter("admin", results);
 
-    res.status(200).json(results);
+    res.status(200).json(roleFilteredResults);
   } catch (error) {
     console.error("Error fetching welding data:", error);
     res.status(500).json({ error: "Internal Server Error" });
