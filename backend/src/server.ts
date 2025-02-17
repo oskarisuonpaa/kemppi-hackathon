@@ -49,3 +49,5 @@ app.use("/api/visitor", visitorRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
+
+export default app;

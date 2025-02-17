@@ -9,6 +9,7 @@ const NavBar: React.FC<props> = () => {
     <>
       <nav className="navbar navbar-expand-lg fixed-top navbarScroll navbar-dark">
         <div className="container">
+          <img className="logo" src="/images/logo.png" alt="" />
           <a className="navbar-brand display-2 tk-myriad-pro" href="#">Team Name</a>
           <button className="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
