@@ -1,3 +1,6 @@
+import { totalWeldsLastWeek } from "./dataHelper";
+
 export const roleDataFilter = (role: string, data: any[]) => {
-  console.log(data);
+  const lastWeekWelds = totalWeldsLastWeek(data);
+  console.log(lastWeekWelds)
 };
