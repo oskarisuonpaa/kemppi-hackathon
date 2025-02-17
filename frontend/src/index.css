@@ -66,3 +66,59 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  table-layout: fixed; /* Ensures columns don't stretch unnecessarily */
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 6px 8px; /* Reduced padding for compact look */
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #e6f7ff;
+}
+
+th:hover {
+  background-color: #d0e7ff;
+}
+
+th, td:nth-child(n+3) { /* Center align numerical values */
+  text-align: center;
+}
+
+/* Set specific max-widths for columns */
+th:nth-child(1), td:nth-child(1) { width: 100px; } /* Timestamp */
+th:nth-child(2), td:nth-child(2) { width: 160px; } /* Machine */
+th:nth-child(3) { width: 180px; } /* Other numeric columns */
+th:nth-child(n+4) { width: 110px; } /* Other numeric columns */
+th:nth-child(7) { width: 140px; } /* Other numeric columns */
+th:nth-child(n+8) { width: 80px; } /* Other numeric columns */
+
+/* Sticky header */
+thead {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 2;
+}

@@ -34,9 +34,9 @@ function App() {
 
   return (
     <>
-      <NavBar></NavBar>
+      <NavBar nimi={kayttajatunnus} role={role}></NavBar>
       <MainSection></MainSection>
-      <LoginSection nimi={kayttajatunnus} role={role}></LoginSection>
+      {/* <LoginSection nimi={kayttajatunnus} role={role}></LoginSection> */}
       {role === "visitor" && <VisitorSection></VisitorSection>}
       <ChartSection></ChartSection>
       <AboutSection></AboutSection>
