@@ -56,15 +56,23 @@ const tokenExtractor = (req: CustomRequest, res: Response, next: NextFunction) =
 const userExtractor = async (req: CustomRequest, res: Response, next: NextFunction) => {
   if (!process.env.SECRET) {
     res.status(500);
-    return
+    return;
   }
-  if (!req.token) res.status(401).json({ error: "token missing" });
+  if (!req.token) {
+    res.status(401).json({ error: "token missing" });
+    return;
+  }
+
   const decodedToken = jwt.verify(req.token, process.env.SECRET);
-  if (typeof decodedToken === "string" || !decodedToken.id)
+  if (typeof decodedToken === "string" || !decodedToken.id) {
     res.status(401).json({ error: "token invalid" });
+    return;
+  }
+
   const user = await User.findById(decodedToken.id);
   if (!user) {
     res.status(404).json({ error: "user not found" });
+    return;
   }
   req.user = user;
   next();
