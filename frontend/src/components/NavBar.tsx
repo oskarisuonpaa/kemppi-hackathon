@@ -9,20 +9,20 @@ const NavBar: React.FC<props> = () => {
     <>
       <nav className="navbar navbar-expand-lg fixed-top navbarScroll navbar-dark">
         <div className="container">
-          <a className="navbar-brand display-2" href="#">Team Name</a>
+          <a className="navbar-brand display-2 tk-myriad-pro" href="#">Team Name</a>
           <button className="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse text-center" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="#home">Home</a>
+                <a className="nav-link tk-proxima-nova" href="#home">Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#about">Data</a>
+                <a className="nav-link tk-proxima-nova" href="#about">Data</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#services">Services</a>
+                <a className="nav-link tk-proxima-nova" href="#services">Services</a>
               </li>
             </ul>
           </div>
