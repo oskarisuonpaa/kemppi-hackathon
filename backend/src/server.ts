@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { usersRouter } from "./controllers/users";
 import { dataRouter } from "./controllers/data";
 import mongoose from "mongoose";
+import { unknownEndpoint } from "./utils/middleware";
 
 dotenv.config();
 
@@ -40,3 +41,4 @@ app.get("/health", (_req: Request, res: Response) => {
 
 app.use("/api/data", dataRouter);
 app.use("/api/users", usersRouter);
+app.use(unknownEndpoint);
