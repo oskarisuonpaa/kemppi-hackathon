@@ -24,5 +24,14 @@ export const totalWireConsumed = (data: any[]) => {
     return acc;
   }, 0);
 
-  return totalWire;
+  return totalWire.toFixed(2);
+}
+
+export const averageWeldDuration = (data: any[]) => {
+  const totalDuration = data.reduce((acc: number, weld) => {
+    acc += weld.weldDurationMs.totalMs;
+    return acc/1000;
+  }, 0);
+
+  return (totalDuration / data.length).toFixed(2);
 }

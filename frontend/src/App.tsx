@@ -9,6 +9,7 @@ import axiosInstance from "./utils/axiosInstance"
 import { useAuth } from "./utils/authContext";
 import { Kayttaja, InitialKayttaja } from './types'
 import LoginSection from './components/LoginSection'
+import ChartSection from './components/ChartSection'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         console.log("Käyttäjätunnus: ", kayttajatunnus);
         console.log("role: ", role);
         console.log("is authenticated:" + isAuthenticated)
+        
       };
       fetchUser();
     }
@@ -34,6 +36,7 @@ function App() {
       <NavBar></NavBar>
       <MainSection></MainSection>
       <LoginSection nimi={kayttajatunnus} role={role}></LoginSection>
+      <ChartSection></ChartSection>
       <AboutSection></AboutSection>
       <ServicesSection></ServicesSection>
       <ContactSection></ContactSection>

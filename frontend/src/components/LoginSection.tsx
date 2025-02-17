@@ -15,28 +15,23 @@ const LoginSection: React.FC<Props> = ({ nimi, role }) => {
     const [message, setMessage] = useState("");
     const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
     const { setKayttajatunnus } = useAuth();
-    const [show, setShow] = React.useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
-    const handleClick = () => setShow(!show);
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
             const response = await axios.post(`${backendUrl}/api/login`, { username, password });
-            console.log("response got.")
             console.log(response.data.token, username, response.data.role)
             localStorage.setItem("authToken", response.data.token);
             localStorage.setItem("username", username);
             localStorage.setItem("role", response.data.role)
 
             setKayttajatunnus(username);
-            setMessage("Login successful");
             window.location.reload();
         } catch (error) {
             setMessage("Login failed");
@@ -51,12 +46,9 @@ const LoginSection: React.FC<Props> = ({ nimi, role }) => {
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
-        const role = localStorage.getItem("role");
         if (token && checkTokenValidity(token)) {
-            console.log("auth works.")
             setIsAuthenticated(true);
         } else {
-            console.log("auth not works.")
             setIsAuthenticated(false);
         }
     }, []);
