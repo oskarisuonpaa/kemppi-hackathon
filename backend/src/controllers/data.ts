@@ -90,6 +90,8 @@ dataRouter.get("/", async (req: Request, res: Response) => {
 
     const results = await WeldingData.find(filter);
 
+    results.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+
     res.status(200).json(results);
   } catch (error) {
     console.error("Error fetching welding data:", error);
