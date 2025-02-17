@@ -17,7 +17,7 @@ usersRouter.get("/", async (req: Request, res: Response) => {
 // Create new user
 usersRouter.post("/", async (req: Request, res: Response) => {
   try {
-    const { username, name, password } = req.body;
+    const { username, name, password, role } = req.body;
 
     if (!password) {
       res.status(400).json({ error: "Password is required" });
