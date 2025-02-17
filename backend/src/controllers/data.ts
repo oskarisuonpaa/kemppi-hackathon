@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { WeldingData } from "../models/weldingData";
+import { roleDataFilter } from "../utils/roleDataFilter";
 
 export const dataRouter = Router();
 
@@ -16,13 +17,35 @@ export const dataRouter = Router();
  */
 dataRouter.get("/", async (req: Request, res: Response) => {
   try {
-    const { model, currentMin, currentMax, voltageMin, voltageMax, startDate, endDate } =
-      req.query as Record<string, string>;
+    const {
+      model,
+      serial,
+      name,
+      group,
+      currentMin,
+      currentMax,
+      voltageMin,
+      voltageMax,
+      startDate,
+      endDate,
+    } = req.query as Record<string, string>;
 
     const filter: Record<string, any> = {};
 
     if (model) {
       filter["weldingMachine.model"] = model;
+    }
+
+    if (serial) {
+      filter["weldingMachine.serial"] = serial;
+    }
+
+    if (name) {
+      filter["weldingMachine.name"] = name;
+    }
+
+    if (group) {
+      filter["weldingMachine.group"] = group;
     }
 
     if (currentMin || currentMax) {
@@ -68,6 +91,10 @@ dataRouter.get("/", async (req: Request, res: Response) => {
 
     const results = await WeldingData.find(filter);
 
+    results.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+
+    roleDataFilter("admin", results);
+
     res.status(200).json(results);
   } catch (error) {
     console.error("Error fetching welding data:", error);
@@ -75,7 +102,35 @@ dataRouter.get("/", async (req: Request, res: Response) => {
   }
 });
 
-// POST /api/data
+/**
+ * POST /api/data
+ * Example request body:
+ * {
+ *  "timestamp": "2025-01-01T12:00:00Z",
+ * "weldingMachine": {
+ *  "model": "SuperWelder",
+ * "serial": "12345",
+ * "name": "WeldMaster",
+ * "group": "Welding Department"
+ * },
+ * "weldingParameters": {
+ * "current": {
+ * "min": 50,
+ * "max": 100,
+ * "avg": 75
+ * },
+ * "voltage": {
+ * "min": 10,
+ * "max": 20,
+ * "avg": 15
+ * }
+ * },
+ * "weldDurationMs": {
+ * "preWeldMs": 1000,
+ * "weldMs": 5000,
+ * }
+ * }
+ */
 dataRouter.post("/", async (req: Request, res: Response) => {
   try {
     const { timestamp, weldingMachine, weldingParameters, weldDurationMs } = req.body;
@@ -92,6 +147,50 @@ dataRouter.post("/", async (req: Request, res: Response) => {
     res.status(201).json(newWeldingData);
   } catch (error) {
     console.error("Error saving welding data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+/**
+ * DELETE /api/data/:id
+ */
+
+dataRouter.delete("/:id", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    await WeldingData.findByIdAndDelete(id);
+
+    res.status(204).end();
+  } catch (error) {
+    console.error("Error deleting welding data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+/**
+ * PUT /api/data/:id
+ */
+
+dataRouter.put("/:id", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { timestamp, weldingMachine, weldingParameters, weldDurationMs } = req.body;
+
+    const updatedWeldingData = await WeldingData.findByIdAndUpdate(
+      id,
+      {
+        timestamp,
+        weldingMachine,
+        weldingParameters,
+        weldDurationMs,
+      },
+      { new: true }
+    );
+
+    res.status(200).json(updatedWeldingData);
+  } catch (error) {
+    console.error("Error updating welding data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
