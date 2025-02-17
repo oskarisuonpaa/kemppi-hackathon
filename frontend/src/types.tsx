@@ -1,9 +1,9 @@
 export interface Kayttaja {
     kayttajatunnus: string;
-    rooli: string;
+    role: string;
   }
 
 export const InitialKayttaja: Kayttaja = {
     kayttajatunnus: "",
-    rooli: ""
+    role: ""
   };

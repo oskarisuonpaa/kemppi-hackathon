@@ -13,28 +13,17 @@ import LoginSection from './components/LoginSection'
 function App() {
 
   const [user, setUser] = useState<Kayttaja>(InitialKayttaja);
-  const { kayttajatunnus } = useAuth();
+  const { kayttajatunnus, role, isAuthenticated } = useAuth();
   const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
   // Hae kirjautunut käyttäjä
   useEffect(() => {
     if (kayttajatunnus) {
       const fetchUser = async () => {
-        try {
-          console.log("Käyttäjätunnus: ", kayttajatunnus);
-          const response = await axiosInstance.get(`${backendUrl}/api/users`, { params: { kayttajatunnus }, });
-          const nykyinenKayttaja = response.data;
-          setUser((prevValues) => ({
-            ...prevValues,
-            kayttajatunnus: nykyinenKayttaja.kayttajatunnus,
-            rooli: nykyinenKayttaja.rooli,
-          }));
-          console.log("Rooli: ", user.rooli);
-        } catch (error) {
-          console.error("There was an error fetching the data!", error);
-        }
+        console.log("Käyttäjätunnus: ", kayttajatunnus);
+        console.log("role: ", role);
+        console.log("is authenticated:" + isAuthenticated)
       };
-
       fetchUser();
     }
   }, [backendUrl, kayttajatunnus]);
@@ -44,7 +33,7 @@ function App() {
     <>
       <NavBar></NavBar>
       <MainSection></MainSection>
-      <LoginSection nimi={user.kayttajatunnus}></LoginSection>
+      <LoginSection nimi={kayttajatunnus} role={role}></LoginSection>
       <AboutSection></AboutSection>
       <ServicesSection></ServicesSection>
       <ContactSection></ContactSection>

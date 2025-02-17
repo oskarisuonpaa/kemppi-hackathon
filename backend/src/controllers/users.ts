@@ -1,7 +1,6 @@
 import { Router, Request, Response } from "express";
 import User from "../models/user";
 import bcrypt from "bcrypt";
-import * as middleware from "../utils/middleware";
 
 const hashedPassword = async (password: string) => {
   const saltRounds = 10;
@@ -16,38 +15,34 @@ usersRouter.get("/", async (req: Request, res: Response) => {
 });
 
 // Create new user
-usersRouter.post(
-  "/",
-  middleware.tokenExtractor,
-  middleware.userExtractor,
-  async (req: Request, res: Response) => {
-    try {
-      const { username, name, password, role } = req.body;
+usersRouter.post("/", async (req: Request, res: Response) => {
+  try {
+    const { username, name, password } = req.body;
 
-      if (!password) {
-        res.status(400).json({ error: "Password is required" });
-        return;
-      }
+    if (!password) {
+      res.status(400).json({ error: "Password is required" });
+      return;
+    }
 
-      // Password must have:
-      // - At least 8 characters
-      // - At least one uppercase letter
-      // - At least one lowercase letter
-      // - At least one digit
-      // - At least one special character (@, $, !, %, *, ?, &)
-      const strongPasswordRegex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    // Password must have:
+    // - At least 8 characters
+    // - At least one uppercase letter
+    // - At least one lowercase letter
+    // - At least one digit
+    // - At least one special character (@, $, !, %, *, ?, &)
+    const strongPasswordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-      if (!strongPasswordRegex.test(password)) {
-        res.status(400).json({
-          error:
-            "Password must be at least 8 characters long and contain uppercase, lowercase, digit, and special character",
-        });
-        return;
-      }
+    if (!strongPasswordRegex.test(password)) {
+      res.status(400).json({
+        error:
+          "Password must be at least 8 characters long and contain uppercase, lowercase, digit, and special character",
+      });
+      return;
+    }
 
-      const saltRounds = 10;
-      const passwordHash = await bcrypt.hash(password, saltRounds);
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
 
       const user = new User({
         username,
@@ -56,15 +51,14 @@ usersRouter.post(
         role
       });
 
-      const savedUser = await user.save();
+    const savedUser = await user.save();
 
-      res.status(201).json(savedUser);
-    } catch (error) {
-      console.error("Error creating user:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
+    res.status(201).json(savedUser);
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-);
+});
 
 // Update user
 

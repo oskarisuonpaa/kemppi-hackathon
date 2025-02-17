@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router";
 import { useAuth } from "../utils/authContext.tsx";
 import { checkTokenValidity } from "../utils/authUtils";
 
 interface Props {
     nimi: string | null;
+    role: string | null;
 }
 
-const LoginSection: React.FC<Props> = ({nimi}) => {
+const LoginSection: React.FC<Props> = ({ nimi, role }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState("");
     const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
-    const navigate = useNavigate();
     const { setKayttajatunnus } = useAuth();
     const [show, setShow] = React.useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -31,13 +30,14 @@ const LoginSection: React.FC<Props> = ({nimi}) => {
         try {
             const response = await axios.post(`${backendUrl}/api/login`, { username, password });
             console.log("response got.")
-            console.log(response.data.token, username)
+            console.log(response.data.token, username, response.data.role)
             localStorage.setItem("authToken", response.data.token);
             localStorage.setItem("username", username);
+            localStorage.setItem("role", response.data.role)
 
             setKayttajatunnus(username);
             setMessage("Login successful");
-            navigate("/");
+            window.location.reload();
         } catch (error) {
             setMessage("Login failed");
         }
@@ -45,65 +45,70 @@ const LoginSection: React.FC<Props> = ({nimi}) => {
 
     const handleLogout = () => {
         localStorage.removeItem("authToken");
-        navigate("/login");
-      };
+        localStorage.removeItem("role");
+        window.location.reload();
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         const token = localStorage.getItem("authToken");
+        const role = localStorage.getItem("role");
         if (token && checkTokenValidity(token)) {
-          setIsAuthenticated(true);
+            console.log("auth works.")
+            setIsAuthenticated(true);
         } else {
-          setIsAuthenticated(false);
+            console.log("auth not works.")
+            setIsAuthenticated(false);
         }
-      }, []);
+    }, []);
 
     return (
-        <div className="App">Moi
-            <p>Kirjaudu {message} {username}</p>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="username">Käyttäjätunnus</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="Käyttäjätunnus"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div style={{ marginTop: '1rem' }}>
-                    <label htmlFor="password">Salasana</label>
-                    <div style={{ position: 'relative' }}>
-                        <input
-                            type={showPassword ? 'text' : 'password'}
-                            id="password"
-                            name="password"
-                            placeholder="Salasana"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            style={{ paddingRight: '4.5rem' }}
-                        />
-                        <button
-                            type="button"
-                            style={{position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', height: '1.75rem', fontSize: 'small'}}
-                            onClick={togglePasswordVisibility}>
-                            {showPassword ? 'Hide' : 'Show'}
+        <div>
+            {isAuthenticated && nimi !== "" ?
+                <>Tervetuloa, {nimi} {role}!
+                    <button className="logout" onClick={handleLogout}>Logout</button>
+                </> : <>
+                    <p>Kirjaudu {message}</p>
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <label htmlFor="username">Käyttäjätunnus</label>
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Käyttäjätunnus"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div style={{ marginTop: '1rem' }}>
+                            <label htmlFor="password">Salasana</label>
+                            <div style={{ position: 'relative' }}>
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    id="password"
+                                    name="password"
+                                    placeholder="Salasana"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    style={{ paddingRight: '4.5rem' }}
+                                />
+                                <button
+                                    type="button"
+                                    style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', height: '1.75rem', fontSize: 'small' }}
+                                    onClick={togglePasswordVisibility}>
+                                    {showPassword ? 'Hide' : 'Show'}
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" style={{ backgroundColor: 'blue', color: 'white', width: '100%', marginTop: '1rem' }}>
+                            Login
                         </button>
-                    </div>
-                </div>
-                <button type="submit" style={{ backgroundColor: 'blue', color: 'white', width: '100%', marginTop: '1rem' }}>
-                    Login
-                </button>
-            </form>
-            {isAuthenticated && nimi !== "" && (
-                <>Tervetuloa, {nimi}!
-                  <button className="logout" onClick={handleLogout}>Logout</button>
-                </>
-              )}
+                    </form>
+                </>}
         </div>
+
 
     );
 };
