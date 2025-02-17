@@ -90,17 +90,18 @@
 } */
 
 .card:hover {
-  border: 2px solid rgb(5, 44, 101);
+  border: 2px solid rgb(245, 115, 0);
 }
 
 .servicesText {
-  border: 2px solid #b8b8b8;
-  color: #565656;
+  border: 2px solid rgb(178, 178, 178);
+  color: rgb(76, 76, 76);
 }
 
 .servicesText:hover {
-  border: 2px solid rgb(5, 44, 101);
-  color: rgb(5, 44, 101);
+  border: 2px solid rgb(245, 115, 0);
+  color: rgb(245, 115, 0);
+
 }
 
 /* social media icons styling */
@@ -137,6 +138,11 @@
 }
 
 /* own colors  */
+
+.bg-orange {
+  background-color: rgb(245, 115, 0);
+}
+
 .bg-dark-blue {
-  background-color: rgb(5, 44, 101);
+  background-color: rgb(245, 115, 0);
 }
