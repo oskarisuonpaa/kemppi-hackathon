@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { usersRouter } from "./controllers/users";
 import { dataRouter } from "./controllers/data";
+import { loginRouter } from "./controllers/login";
 import mongoose from "mongoose";
 
 dotenv.config();
@@ -38,5 +39,6 @@ app.get("/health", (_req: Request, res: Response) => {
   res.status(200).send("OK");
 });
 
-app.use("/api/data", dataRouter);
+app.use("/api/data",  dataRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/login", loginRouter);
