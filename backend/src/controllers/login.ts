@@ -1,32 +1,38 @@
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-import { Router, Request, Response } from 'express'
-//import User from '../models/user'
-import express from 'express'
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import User from '../models/user';
 
-export const loginRouter = Router();
+export const loginRouter = express.Router();
 
-loginRouter.post('/', async (req: Request, res: Response): Promise<> => {
-    const { username, password } = req.body
+interface UserType {
+    username: string;
+    passwordHash: string;
+    _id: string;
+    name: string;
+}
 
-    const user  = await User.findOne({ username })
-    const passwordCorrect = user === null
-        ? false
-        : await bcrypt.compare(password, user.passwordHash)
+loginRouter.post('/', async (request: express.Request, response: express.Response) => {
+    const { username, password } = request.body;
 
-    if (!(user && passwordCorrect)) {
-        return res.status(401).json({
-            error: 'Invalid username or password'
-        })
+    const user: UserType | null = await User.findOne({ username });
+    const passwordCorrect = user
+        ? await bcrypt.compare(password, user.passwordHash)
+        : false;
+
+    if (!user || !passwordCorrect) {
+        response.status(401).json({
+            error: 'Invalid username or password',
+        });
+        return
     }
 
     const userForToken = {
         username: user.username,
-        id: user._id
-    }
+        id: user._id.toString(),
+    };
 
-    const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 60*60 })
+    const token = jwt.sign(userForToken, process.env.SECRET as string, { expiresIn: 60 * 60 });
 
-    res.status(200).send({ token, username: user.username, name: user.name })
-})
-
+    response.status(200).send({ token, username: user.username, name: user.name });
+});

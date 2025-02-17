@@ -6,7 +6,11 @@ import AboutSection from './components/AboutSection'
 import FooterSection from './components/FooterSection'
 import MainSection from './components/MainSection'
 import ServicesSection from './components/ServicesSection'
+<<<<<<< HEAD
 import ContactSection from './components/ContactSection'
+=======
+import axiosInstance from "./utils/axiosInstance";
+>>>>>>> refs/remotes/origin/main
 // import './App.css'
 
 function App() {
