@@ -10,6 +10,14 @@ body {
   font-family: "myriad-pro", sans-serif;
 }
 
+.logo {
+  width: 70px;
+  height: 70px;
+  margin: 0 0;
+  padding: 0 0;
+  /* display: block; */
+}
+
 /* hero background image */
 .bgimage {
   height: 100vh;
@@ -49,7 +57,7 @@ body {
 
 .nav-link {
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: bold;
 }
 
