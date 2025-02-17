@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { usersRouter } from './controllers/users';
 import { dataRouter } from './controllers/data';
+import { loginRouter } from './controllers/login'
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api/data', dataRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/login', loginRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
