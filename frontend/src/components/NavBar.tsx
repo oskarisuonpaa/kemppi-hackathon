@@ -117,6 +117,14 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
               </li>
             </ul>
 
+            <ul className="navbar-nav ms-auto">
+              <li className="nav-item active">
+                <a className="nav-link tk-proxima-nova" href="#user_edits" >
+                  Edit User
+                </a>
+              </li>
+            </ul>
+
             <div>
               {isAuthenticated && nimi !== "" ? (
                 <>
