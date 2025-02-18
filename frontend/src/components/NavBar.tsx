@@ -104,7 +104,7 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
 
             <div>
               {isAuthenticated && nimi !== "" ?
-                <><span style={{color: "gray", marginLeft: "1.2em", marginRight: "0.6em"}}>Welcome, {nimi}!</span> <button className="logout" onClick={handleLogout}>Logout</button></> :
+                <><span style={{color: "#f57300", marginLeft: "1.2em", marginRight: "0.6em"}}>Welcome, {nimi}!</span> <button className="logout btn" onClick={handleLogout}>Logout</button></> :
                 localStorage.getItem("role") === "visitor" ?
                   <button className="login_btn btn btn-outline-dark" onClick={handleClickVisitor}>Login to see more data</button> :
                   <div style={{ position: "relative", display: "inline-block" }} ref={dropdownRef}>
