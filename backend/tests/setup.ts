@@ -88,6 +88,7 @@ beforeAll(async () => {
     name: "Admin",
     passwordHash: "admin",
     role: "admin",
+    group: ["LAB 1"],
   });
 
   await user.save();

@@ -25,15 +25,9 @@ export const roleDataFilter = (role: string, allowedGroups: string[], data: any[
   }
 
   if (role === "viewer") {
-    filteredData = filteredData.map((item) => {
-      const machineGroup = item.weldingMachine?.group;
-      if (!machineGroup || !allowedGroups.includes(machineGroup)) {
-        delete item.weldingParameters;
-        delete item.materialConsumption;
-        delete item.weldDurationMs;
-      }
-      return item;
-    });
+    filteredData = filteredData.filter((item) =>
+      allowedGroups.includes(item.weldingMachine.group)
+    );
   }
 
   return filteredData;

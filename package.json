@@ -1,0 +1,28 @@
+{
+  "name": "kemppi-hackathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "init:backend": "cd backend && npm install",
+    "init:frontend": "cd frontend && npm install",
+    "init": "npm run init:backend && npm run init:frontend",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oskarisuonpaa/kemppi-hackathon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oskarisuonpaa/kemppi-hackathon/issues"
+  },
+  "homepage": "https://github.com/oskarisuonpaa/kemppi-hackathon#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

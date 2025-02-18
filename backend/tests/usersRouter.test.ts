@@ -14,37 +14,36 @@ beforeAll(() => {
   app.use("/api/users", usersRouter);
 });
 
-// Clear the users collection before each test
 beforeEach(async () => {
   await User.deleteMany({});
 });
 
 describe("GET /api/users", () => {
   it("should return all users", async () => {
-    // Seed two users with valid role values ("visitor" and "admin")
     const user1 = new User({
       username: "user1",
       name: "User One",
       passwordHash: "hash1",
       role: "visitor",
+      group: ["group1"],
     });
     const user2 = new User({
       username: "user2",
       name: "User Two",
       passwordHash: "hash2",
       role: "admin",
+      group: ["group2"],
     });
     await user1.save();
     await user2.save();
 
     const response = await request(app).get("/api/users").expect(200);
-    // Since toJSON transforms remove _id and passwordHash, we expect "id"
     expect(response.body.length).toBe(2);
     expect(response.body[0]).toHaveProperty("id");
     expect(response.body[0]).toHaveProperty("username");
     expect(response.body[0]).toHaveProperty("name");
     expect(response.body[0]).toHaveProperty("role");
-    // passwordHash should not be included
+    expect(response.body[0]).toHaveProperty("group");
     expect(response.body[0]).not.toHaveProperty("passwordHash");
   });
 });
@@ -54,20 +53,20 @@ describe("POST /api/users", () => {
     const newUser = {
       username: "newuser",
       name: "New User",
-      password: "Password1!", // valid strong password
-      role: "visitor", // valid role from enum ["visitor", "admin", "viewer"]
+      password: "Password1!",
+      role: "visitor",
+      group: ["group1", "group2"],
     };
 
     const response = await request(app).post("/api/users").send(newUser).expect(201);
 
-    // Expect the transformed user to have an "id" property (not _id) and no passwordHash.
     expect(response.body).toHaveProperty("id");
     expect(response.body.username).toBe(newUser.username);
     expect(response.body.name).toBe(newUser.name);
     expect(response.body.role).toBe(newUser.role);
+    expect(response.body.group).toEqual(newUser.group);
     expect(response.body).not.toHaveProperty("passwordHash");
 
-    // Verify that the user was actually saved in the database.
     const savedUser = await User.findOne({ username: "newuser" });
     expect(savedUser).toBeTruthy();
   });
@@ -77,6 +76,7 @@ describe("POST /api/users", () => {
       username: "nouser",
       name: "No User",
       role: "visitor",
+      group: ["group1"],
     };
 
     const response = await request(app).post("/api/users").send(newUser).expect(400);
@@ -87,8 +87,9 @@ describe("POST /api/users", () => {
     const newUser = {
       username: "weakuser",
       name: "Weak User",
-      password: "weakpass", // does not meet strength criteria
+      password: "weakpass",
       role: "visitor",
+      group: ["group1"],
     };
 
     const response = await request(app).post("/api/users").send(newUser).expect(400);
@@ -96,7 +97,6 @@ describe("POST /api/users", () => {
   });
 
   it("should return 500 if there is a server error during user creation", async () => {
-    // Simulate a server error by overriding the save method.
     const originalSave = User.prototype.save;
     User.prototype.save = jest.fn().mockImplementation(() => {
       throw new Error("Test error");
@@ -107,6 +107,7 @@ describe("POST /api/users", () => {
       name: "Error User",
       password: "Password1!",
       role: "visitor",
+      group: ["group1"],
     };
 
     const response = await request(app).post("/api/users").send(newUser).expect(500);
@@ -125,14 +126,16 @@ describe("PUT /api/users/:id", () => {
       name: "Update User",
       passwordHash: await bcrypt.hash("Password1!", 10),
       role: "visitor",
+      group: ["group1"],
     });
     await user.save();
 
     const updateData = {
       username: "updateduser",
       name: "Updated User",
-      password: "NewPass1!", // new valid password
-      role: "admin", // valid role update
+      password: "NewPass1!",
+      role: "admin",
+      group: ["group3"],
     };
 
     const response = await request(app)
@@ -143,7 +146,7 @@ describe("PUT /api/users/:id", () => {
     expect(response.body.username).toBe(updateData.username);
     expect(response.body.name).toBe(updateData.name);
     expect(response.body.role).toBe(updateData.role);
-    // passwordHash is removed from JSON, so we cannot assert its presence
+    expect(response.body.group).toEqual(updateData.group);
     expect(response.body).not.toHaveProperty("passwordHash");
   });
 
@@ -154,6 +157,7 @@ describe("PUT /api/users/:id", () => {
       name: "Nonexistent",
       password: "Password1!",
       role: "visitor",
+      group: ["group1"],
     };
 
     const response = await request(app)
@@ -171,6 +175,7 @@ describe("DELETE /api/users/:id", () => {
       name: "Delete User",
       passwordHash: "hashdelete",
       role: "visitor",
+      group: ["group1"],
     });
     await user.save();
 
