@@ -2,6 +2,10 @@ import { Router, Request, Response } from "express";
 import { WeldingData } from "../models/weldingData";
 import { roleDataFilter } from "../utils/roleDataFilter";
 
+interface CustomRequest extends Request {
+  user?: any;
+}
+
 export const dataRouter = Router();
 
 /**
@@ -18,11 +22,11 @@ export const dataRouter = Router();
  * &startDate=2025-01-01T00:00:00Z
  * &endDate=2025-01-02T00:00:00Z
  *
- * all query params are optional
+dataRouter.get("/", async (req: CustomRequest, res: Response) => {
  * numeric values return results which average is within the range
  * date values return results which timestamp is within the range
  */
-dataRouter.get("/", async (req: Request, res: Response) => {
+dataRouter.get("/", async (req: CustomRequest, res: Response) => {
   const {
     model,
     serial,
@@ -94,13 +98,19 @@ dataRouter.get("/", async (req: Request, res: Response) => {
       filter.timestamp = dateRange;
     }
   }
-  console.log(filter);
   try {
     const results = await WeldingData.find(filter);
 
     results.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
 
-    const roleFilteredResults = roleDataFilter("admin", results);
+    if (!req.user) {
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+
+    const { role, group: allowedGroups } = req.user;
+
+    const roleFilteredResults = roleDataFilter(role, allowedGroups, results);
 
     res.status(200).json(roleFilteredResults);
   } catch (error) {

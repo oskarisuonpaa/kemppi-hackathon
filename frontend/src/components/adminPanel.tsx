@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CSSProperties, useEffect, useState } from "react";
+import UserManager from "./userManagement/userManager";
 
 const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 const token = localStorage.getItem("authToken");
@@ -11,21 +12,21 @@ interface User {
 }
 
 const tableStyle: CSSProperties = {
-    borderCollapse: 'collapse',
-    width: '80%',
-    margin: '20px auto',
+    // borderCollapse: 'collapse',
+    // width: '80%',
+    // margin: '20px auto',
 };
 
 const thStyle: CSSProperties = {
-    border: '2px solid #F57300',
-    padding: '10px',
-    backgroundColor: '#cccccc',
-    color: '#000000',
+    // border: '2px solid #F57300',
+    // padding: '10px',
+    // backgroundColor: '#cccccc',
+    // color: '#000000',
 };
 
 const tdStyle: CSSProperties = {
-    border: '2px solid #F57300',
-    padding: '10px',
+    // border: '2px solid #F57300',
+    // padding: '10px',
     textAlign: 'center',
 };
 
@@ -41,7 +42,7 @@ const AdminPanel = () => {
                     },
                 });
                 console.log(response.data);
-                
+
                 setUsers(response.data);
             } catch (err) {
                 console.error('Error fetching users:', err);
@@ -51,26 +52,29 @@ const AdminPanel = () => {
     }, [])
 
     return (
-        <div style={{ textAlign: 'center', margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h1>Users</h1>
-            <table style={tableStyle}>
-                <thead>
-                    <tr>
-                        <th style={thStyle}>Username</th>
-                        <th style={thStyle}>Name</th>
-                        <th style={thStyle}>Role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map(user => (
-                        <tr key={user.username}>
-                            <td style={tdStyle}>{user.username}</td>
-                            <td style={tdStyle}>{user.name}</td>
-                            <td style={tdStyle}>{user.role}</td>
+        <div className="container">
+            <div className="table-responsive" /* style={{ textAlign: 'center', margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }} */>
+                <h1>Users</h1>
+                <table className="table table-striped table-hover" style={tableStyle}>
+                    <thead>
+                        <tr>
+                            <th scope="col" style={thStyle}>Username</th>
+                            <th scope="col" style={thStyle}>Name</th>
+                            <th scope="col" style={thStyle}>Role</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {users.map(user => (
+                            <tr key={user.username}>
+                                <td scope="row" style={tdStyle}>{user.username}</td>
+                                <td scope="row" style={tdStyle}>{user.name}</td>
+                                <td scope="row" style={tdStyle}>{user.role}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <UserManager users={users} />
+            </div>
         </div>
     )
 };

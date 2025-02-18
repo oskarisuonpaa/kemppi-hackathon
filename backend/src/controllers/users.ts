@@ -7,6 +7,7 @@ const hashedPassword = async (password: string) => {
   const passwordHash = await bcrypt.hash(password, saltRounds);
   return passwordHash;
 };
+
 export const usersRouter = Router();
 
 usersRouter.get("/", async (req: Request, res: Response) => {
@@ -17,7 +18,7 @@ usersRouter.get("/", async (req: Request, res: Response) => {
 // Create new user
 usersRouter.post("/", async (req: Request, res: Response) => {
   try {
-    const { username, name, password, role } = req.body;
+    const { username, name, password, role, group } = req.body;
 
     if (!password) {
       res.status(400).json({ error: "Password is required" });
@@ -44,12 +45,14 @@ usersRouter.post("/", async (req: Request, res: Response) => {
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
-      const user = new User({
-        username,
-        name,
-        passwordHash,
-        role
-      });
+    // Create the user; if group is not provided, default to an empty array.
+    const user = new User({
+      username,
+      name,
+      passwordHash,
+      role,
+      group: group || [],
+    });
 
     const savedUser = await user.save();
 
@@ -61,10 +64,9 @@ usersRouter.post("/", async (req: Request, res: Response) => {
 });
 
 // Update user
-
 usersRouter.put("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { username, name, password, role } = req.body;
+  const { username, name, password, role, group } = req.body;
 
   const oldUser = await User.findById(id);
   if (!oldUser) {
@@ -77,8 +79,9 @@ usersRouter.put("/:id", async (req: Request, res: Response) => {
     {
       username: username ?? oldUser.username,
       name: name ?? oldUser.name,
-      password: password ? await hashedPassword(password) : oldUser.passwordHash,
+      passwordHash: password ? await hashedPassword(password) : oldUser.passwordHash,
       role: role ?? oldUser.role,
+      group: group ?? oldUser.group,
     },
     { new: true, runValidators: true, context: "query" }
   );
