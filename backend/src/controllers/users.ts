@@ -45,7 +45,6 @@ usersRouter.post("/", async (req: Request, res: Response) => {
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
-    // Create the user; if group is not provided, default to an empty array.
     const user = new User({
       username,
       name,
