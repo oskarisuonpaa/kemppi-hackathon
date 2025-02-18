@@ -117,7 +117,7 @@ const ChartSection: React.FC<props> = () => {
 
     return (
         <>
-            <div style={{ margin: "20px", textAlign: "center" }}>
+            <div id="charts" style={{ margin: "20px", textAlign: "center" }}>
                 {/* Tabs Navigation */}
                 <div style={{ display: "flex", marginBottom: "10px" }}>
                     <button onClick={() => setActiveTab("data")} style={{ padding: "10px", border: "none", cursor: "pointer", background: activeTab === "data" ? "#000000" : "#ddd", color: activeTab === "data" ? "white" : "black", flex: 1 }}>
