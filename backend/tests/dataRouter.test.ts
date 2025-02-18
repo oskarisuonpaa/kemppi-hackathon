@@ -102,7 +102,7 @@ describe("GET /api/data", () => {
     viewerApp.use("/api/data", dataRouter);
 
     const response = await request(viewerApp).get("/api/data").expect(200);
-    expect(response.body.length).toBe(2);
+    expect(response.body.length).toBe(1);
 
     const record1 = response.body.find(
       (item: any) => item.weldingMachine.group === "Test group"
@@ -115,9 +115,7 @@ describe("GET /api/data", () => {
     expect(record1).toHaveProperty("materialConsumption");
     expect(record1).toHaveProperty("weldDurationMs");
 
-    expect(record2).not.toHaveProperty("weldingParameters");
-    expect(record2).not.toHaveProperty("materialConsumption");
-    expect(record2).not.toHaveProperty("weldDurationMs");
+    expect(record2).toBeUndefined();
   });
 
   it("should filter data by weldingMachine.model", async () => {
