@@ -42,14 +42,14 @@ interface WeldingComparisonChartProps {
     data: WeldingData[];
 }
 
-const WeldingComparisonChart: React.FC<WeldingComparisonChartProps> = ({ chartname, chartwidth, data }) => {
+const WeldingComparisonChartModel: React.FC<WeldingComparisonChartProps> = ({ chartname, chartwidth, data }) => {
     // Group data by welding machine and calculate total energy consumption
     const groupedData = data.reduce((acc, curr) => {
-        const machineName = curr.weldingMachine.name;
-        if (!acc[machineName]) {
-          acc[machineName] = 0;
+        const machineKey = `${curr.weldingMachine.name} (${curr.weldingMachine.model})`;
+        if (!acc[machineKey]) {
+          acc[machineKey] = 0;
         }
-        acc[machineName] += curr.materialConsumption.energyConsumptionAsWh;
+        acc[machineKey] += curr.materialConsumption.energyConsumptionAsWh;
         return acc;
       }, {} as Record<string, number>);
 
@@ -76,4 +76,4 @@ const WeldingComparisonChart: React.FC<WeldingComparisonChartProps> = ({ chartna
     );
 };
 
-export default WeldingComparisonChart;
+export default WeldingComparisonChartModel;
