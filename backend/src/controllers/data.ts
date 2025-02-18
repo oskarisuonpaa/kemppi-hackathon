@@ -140,13 +140,20 @@ dataRouter.get("/", async (req: Request, res: Response) => {
  */
 dataRouter.post("/", async (req: Request, res: Response) => {
   try {
-    const { timestamp, weldingMachine, weldingParameters, weldDurationMs } = req.body;
+    const {
+      timestamp,
+      weldingMachine,
+      weldingParameters,
+      weldDurationMs,
+      materialConsumption,
+    } = req.body;
 
     const newWeldingData = new WeldingData({
       timestamp,
       weldingMachine,
       weldingParameters,
       weldDurationMs,
+      materialConsumption,
     });
 
     await newWeldingData.save();

@@ -1,0 +1,217 @@
+// dataRouter.test.ts
+import express from "express";
+import request from "supertest";
+import { dataRouter } from "../src/controllers/data";
+import { WeldingData } from "../src/models/weldingData";
+
+let app: express.Application;
+
+beforeAll(() => {
+  app = express();
+  app.use(express.json());
+  app.use("/api/data", dataRouter);
+});
+
+describe("GET /api/data", () => {
+  it("should return all welding data (sorted by timestamp) when no query parameters are provided", async () => {
+    const response = await request(app).get("/api/data").expect(200);
+    expect(response.body.length).toBe(2);
+    const ts0 = new Date(response.body[0].timestamp).getTime();
+    const ts1 = new Date(response.body[1].timestamp).getTime();
+    expect(ts0).toBeLessThanOrEqual(ts1);
+  });
+
+  it("should filter data by weldingMachine.model", async () => {
+    const response = await request(app)
+      .get("/api/data")
+      .query({ model: "MegaWelder" })
+      .expect(200);
+    expect(response.body.length).toBe(2);
+    response.body.forEach((data: any) => {
+      expect(data.weldingMachine.model).toBe("MegaWelder");
+    });
+  });
+
+  it("should filter data by current average range", async () => {
+    const response = await request(app)
+      .get("/api/data")
+      .query({ currentMin: "140", currentMax: "160" })
+      .expect(200);
+    expect(response.body.length).toBe(2);
+  });
+
+  it("should return 500 if an error occurs", async () => {
+    const originalFind = WeldingData.find;
+    (WeldingData.find as any) = () => {
+      throw new Error("Test error");
+    };
+
+    const response = await request(app).get("/api/data").expect(500);
+    expect(response.body).toEqual({ error: "Internal Server Error" });
+    WeldingData.find = originalFind;
+  });
+});
+
+describe("POST /api/data", () => {
+  it("should create new welding data and return it", async () => {
+    const newData = {
+      timestamp: "2025-01-03T12:00:00Z",
+      weldingMachine: {
+        model: "SuperWelder",
+        serial: "54321",
+        name: "WeldPro",
+        group: "Welding group 2",
+      },
+      weldingParameters: {
+        current: { min: 80, max: 120, avg: 100 },
+        voltage: { min: 15, max: 25, avg: 20 },
+      },
+      weldDurationMs: {
+        preWeldMs: 200,
+        weldMs: 600,
+        postWeldMs: 150,
+        totalMs: 950,
+      },
+      materialConsumption: {
+        wireConsumptionInMeters: 10,
+        gasConsumptionInLiters: 20,
+        fillerConsumptionInGrams: 30,
+        energyConsumptionAsWh: 40,
+      },
+    };
+
+    const response = await request(app).post("/api/data").send(newData).expect(201);
+
+    // Normalize timestamps before comparing
+    expect(new Date(response.body.timestamp).toISOString()).toBe(
+      new Date(newData.timestamp).toISOString()
+    );
+    expect(response.body.weldingMachine).toMatchObject(newData.weldingMachine);
+    expect(response.body.weldingParameters).toMatchObject(newData.weldingParameters);
+    expect(response.body.weldDurationMs).toMatchObject(newData.weldDurationMs);
+
+    const savedData = await WeldingData.findOne({ "weldingMachine.serial": "54321" });
+    expect(savedData).toBeTruthy();
+  });
+});
+
+describe("DELETE /api/data/:id", () => {
+  it("should delete the specified welding data", async () => {
+    const recordToDelete = new WeldingData({
+      timestamp: new Date("2025-01-04T12:00:00Z"),
+      weldingMachine: {
+        model: "ToDelete",
+        serial: "del123",
+        name: "DeleteMe",
+        group: "Test group",
+      },
+      weldingParameters: {
+        current: { min: 50, max: 100, avg: 75 },
+        voltage: { min: 10, max: 20, avg: 15 },
+      },
+      weldDurationMs: {
+        preWeldMs: 100,
+        weldMs: 500,
+        postWeldMs: 100,
+        totalMs: 700,
+      },
+      materialConsumption: {
+        wireConsumptionInMeters: 5,
+        gasConsumptionInLiters: 10,
+        fillerConsumptionInGrams: 15,
+        energyConsumptionAsWh: 20,
+      },
+    });
+    await recordToDelete.save();
+    const id = recordToDelete._id.toString();
+
+    await request(app).delete(`/api/data/${id}`).expect(204);
+
+    const deletedRecord = await WeldingData.findById(id);
+    expect(deletedRecord).toBeNull();
+  });
+
+  it("should return 500 if deletion fails", async () => {
+    const originalDelete = WeldingData.findByIdAndDelete;
+    (WeldingData.findByIdAndDelete as any) = jest
+      .fn()
+      .mockRejectedValue(new Error("Delete error"));
+
+    const response = await request(app).delete("/api/data/invalidid").expect(500);
+    expect(response.body).toEqual({ error: "Internal Server Error" });
+
+    WeldingData.findByIdAndDelete = originalDelete;
+  });
+});
+
+describe("PUT /api/data/:id", () => {
+  it("should update the specified welding data and return the updated document", async () => {
+    const recordToUpdate = new WeldingData({
+      timestamp: new Date("2025-01-05T12:00:00Z"),
+      weldingMachine: {
+        model: "ToUpdate",
+        serial: "upd123",
+        name: "UpdateMe",
+        group: "Test group",
+      },
+      weldingParameters: {
+        current: { min: 50, max: 100, avg: 75 },
+        voltage: { min: 10, max: 20, avg: 15 },
+      },
+      weldDurationMs: {
+        preWeldMs: 100,
+        weldMs: 500,
+        postWeldMs: 100,
+        totalMs: 700,
+      },
+      materialConsumption: {
+        wireConsumptionInMeters: 5,
+        gasConsumptionInLiters: 10,
+        fillerConsumptionInGrams: 15,
+        energyConsumptionAsWh: 20,
+      },
+    });
+    await recordToUpdate.save();
+    const id = recordToUpdate._id.toString();
+
+    const updatePayload = {
+      timestamp: "2025-01-06T12:00:00Z",
+      weldingMachine: {
+        model: "UpdatedModel",
+        serial: "upd123",
+        name: "UpdatedName",
+        group: "Updated group",
+      },
+      weldingParameters: {
+        current: { min: 60, max: 110, avg: 85 },
+        voltage: { min: 12, max: 22, avg: 17 },
+      },
+      weldDurationMs: {
+        preWeldMs: 150,
+        weldMs: 550,
+        postWeldMs: 150,
+        totalMs: 850,
+      },
+      materialConsumption: {
+        wireConsumptionInMeters: 5,
+        gasConsumptionInLiters: 10,
+        fillerConsumptionInGrams: 15,
+        energyConsumptionAsWh: 20,
+      },
+    };
+
+    const response = await request(app)
+      .put(`/api/data/${id}`)
+      .send(updatePayload)
+      .expect(200);
+
+    expect(new Date(response.body.timestamp).toISOString()).toBe(
+      new Date(updatePayload.timestamp).toISOString()
+    );
+    expect(response.body.weldingMachine).toMatchObject(updatePayload.weldingMachine);
+    expect(response.body.weldingParameters).toMatchObject(
+      updatePayload.weldingParameters
+    );
+    expect(response.body.weldDurationMs).toMatchObject(updatePayload.weldDurationMs);
+  });
+});

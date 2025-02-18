@@ -21,8 +21,15 @@ body {
 .login_btn {
   margin: 10px 0;
   color: white;
-  background-color: #FF7300;
+  background-color: #f57300;
   width: 100%;
+}
+
+.logout {
+  margin: 10px 0;
+  color: white;
+  background-color: #f57300;
+  /* width: 100%; */
 }
 
 .login_bttn {
@@ -128,7 +135,7 @@ body {
 }
 
 .servicesText:hover {
-  border: 2px solid rgb(245, 115, 0);
+  border: 2px solid #f57300;
   color: rgb(245, 115, 0);
 
 }
