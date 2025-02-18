@@ -58,7 +58,7 @@ const ChartSection: React.FC<props> = () => {
     const initialToken = localStorage.getItem("authToken");
     // Tab selector state
     const [activeTab, setActiveTab] = useState<"data" | "charts" | "other">("data");
-
+    // Slider states
     const [sliderValues, setSliderValues] = useState<[number, number]>([0, 0]);
     const [minDate, setMinDate] = useState<number | null>(null);
     const [maxDate, setMaxDate] = useState<number | null>(null);
@@ -103,7 +103,7 @@ const ChartSection: React.FC<props> = () => {
             setSliderValues(value as [number, number]);
         }
     };
-
+    // Time filtering for data
     const filteredData = weldingData.filter(item => {
         const itemDate = new Date(item.timestamp);
         itemDate.setHours(0, 0, 0, 0); // Set time to midnight
@@ -124,15 +124,16 @@ const ChartSection: React.FC<props> = () => {
                         Data
                     </button>
                     <button onClick={() => setActiveTab("charts")} style={{ padding: "10px", border: "none", cursor: "pointer", background: activeTab === "charts" ? "#000000" : "#ddd", color: activeTab === "charts" ? "white" : "black", flex: 1 }}>
-                        Charts
+                        Welding
                     </button>
                     <button onClick={() => setActiveTab("other")} style={{ padding: "10px", border: "none", cursor: "pointer", background: activeTab === "other" ? "#000000" : "#ddd", color: activeTab === "other" ? "white" : "black", flex: 1 }}>
-                        Other
+                        Consumption
                     </button>
                 </div>
 
                 {minDate !== null && maxDate !== null && (
                     <div>
+                        {/* time filter slider */}
                         <Slider
                             range
                             min={minDate}
@@ -158,12 +159,12 @@ const ChartSection: React.FC<props> = () => {
                             <WeldingComparisonChartPower chartname={"Power Consumption (kW)"} data={filteredData} />
                             <WeldingComparisonChartEnergy chartname={"Energy Consumption (Wh)"} data={filteredData} />
                             <UsedWeldingMachinesChart data={filteredData} />
-                            <WeeklyConsumptionChart data={filteredData} metric="weldTime" />
-                            <WeeklyConsumptionChart data={filteredData} metric="wireConsumption" />
-                            <WeeklyConsumptionChart data={filteredData} metric="fillerConsumption" />
-                            <WeeklyConsumptionChart data={filteredData} metric="gasConsumption" />
                         </div>
-                    ) : <div>
+                    ) : <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: "space-between" }}>
+                        <WeeklyConsumptionChart data={filteredData} metric="weldTime" />
+                        <WeeklyConsumptionChart data={filteredData} metric="wireConsumption" />
+                        <WeeklyConsumptionChart data={filteredData} metric="fillerConsumption" />
+                        <WeeklyConsumptionChart data={filteredData} metric="gasConsumption" />
                     </div>}
                 </div>
             </div>
