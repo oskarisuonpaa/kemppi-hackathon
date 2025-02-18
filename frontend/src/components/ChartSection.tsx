@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import WeldingTrendsChart from "./WeldingList";
 import WeldingComparisonChart from "./WeldingComparisonChart";
+import WeldingComparisonChartModel from "./WeldingComparisonChartModel";
+import UsedWeldingMachinesChart from "./UsedWeldingMachinesChart";
 
 
 interface props {
@@ -51,6 +53,7 @@ const ChartSection: React.FC<props> = () => {
     const [error, setError] = useState<string | null>(null);
     const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
     const initialToken = localStorage.getItem("authToken");
+    // Tab selector state
     const [activeTab, setActiveTab] = useState<"data" | "charts" | "other">("data");
 
     useEffect(() => {
@@ -99,11 +102,13 @@ const ChartSection: React.FC<props> = () => {
                     {activeTab === "data" ? (
                         <WeldingTrendsChart data={weldingData} />
                     ) : activeTab === "charts" ? (
-                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <WeldingComparisonChart chartname={"Energy Consumption per Welding Machine"} data={weldingData} />
-                        <WeldingComparisonChart chartname={"Energy Consumption per Welding Machine"} data={weldingData} />
+                        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: "space-between"}}>
+                        <WeldingComparisonChartModel chartname={"Power Consumption (kW)"} chartwidth="100%" data={weldingData} />
+                        <WeldingComparisonChart chartname={"Energy Consumption (Wh)"} data={weldingData} />
+                        <UsedWeldingMachinesChart data={weldingData} />
                         </div>
-                    ) : ""}
+                    ) : <div>
+                        </div>}
                 </div>
             </div>
         </>

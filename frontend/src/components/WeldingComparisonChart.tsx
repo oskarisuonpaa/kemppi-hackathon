@@ -38,19 +38,20 @@ interface WeldingData {
 
 interface WeldingComparisonChartProps {
     chartname: string;
+    chartwidth?: string;
     data: WeldingData[];
 }
 
-const WeldingComparisonChart: React.FC<WeldingComparisonChartProps> = ({ chartname, data }) => {
+const WeldingComparisonChart: React.FC<WeldingComparisonChartProps> = ({ chartname, chartwidth, data }) => {
     // Group data by welding machine and calculate total energy consumption
     const groupedData = data.reduce((acc, curr) => {
         const machineName = curr.weldingMachine.name;
         if (!acc[machineName]) {
-            acc[machineName] = 0;
+          acc[machineName] = 0;
         }
         acc[machineName] += curr.materialConsumption.energyConsumptionAsWh;
         return acc;
-    }, {} as Record<string, number>);
+      }, {} as Record<string, number>);
 
     // Convert grouped data to chart-friendly format
     const chartData = Object.keys(groupedData).map((name) => ({
@@ -59,7 +60,7 @@ const WeldingComparisonChart: React.FC<WeldingComparisonChartProps> = ({ chartna
     }));
 
     return (
-        <div style={{width:"45%"}}>
+        <div style={{ width: chartwidth ? chartwidth : "49%" }}>
             <h3>{chartname}</h3>
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={chartData}>

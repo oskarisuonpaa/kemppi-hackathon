@@ -106,9 +106,9 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
               {isAuthenticated && nimi !== "" ?
                 <><span style={{color: "gray", marginLeft: "1.2em", marginRight: "0.6em"}}>Welcome, {nimi}!</span> <button className="logout" onClick={handleLogout}>Logout</button></> :
                 localStorage.getItem("role") === "visitor" ?
-                  <button onClick={handleClickVisitor}>Login to see more data</button> :
+                  <button className="login_btn btn btn-outline-dark" onClick={handleClickVisitor}>Login to see more data</button> :
                   <div style={{ position: "relative", display: "inline-block" }} ref={dropdownRef}>
-                    <button style={{marginLeft: "1.2em"}} onClick={() => setIsOpen(!isOpen)}>Login</button>
+                    <button className="login_btn btn btn-outline-dark" style={{marginLeft: "1.2em"}} onClick={() => setIsOpen(!isOpen)}>Login</button>
                     {isOpen && (
                       <form onSubmit={handleSubmit}>
                         <div style={{
@@ -153,10 +153,10 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
                               </button>
                             </div>
                           </div>
-                          <button type="submit" style={{ backgroundColor: 'blue', color: 'white', width: '100%', marginTop: '1rem' }}>
+                          <button type="submit" className="login_btn btn btn-dark" style={{color: 'white', width: '100%', marginTop: '1rem' }}>
                             Login
                           </button>
-                          <button onClick={handleClickVisitor}>Continue as visitor</button>
+                          <button className="login_bttn btn btn-outline-dark" onClick={handleClickVisitor}>Continue as visitor</button>
                         </div>
                       </form>
                     )}
