@@ -58,7 +58,7 @@ interface VisibleColumns {
 
 const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
 
-  const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" } | null>(null);
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" } | null>({key:"timestamp",direction:"asc"});
 
   const [visibleColumns, setVisibleColumns] = useState<VisibleColumns>({
     energy: true,
