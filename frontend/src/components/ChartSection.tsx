@@ -84,13 +84,13 @@ const ChartSection: React.FC<props> = () => {
             <div style={{ margin: "20px", textAlign: "center" }}>
                 {/* Tabs Navigation */}
                 <div style={{ display: "flex", marginBottom: "10px" }}>
-                    <button onClick={() => setActiveTab("data")}style={{padding: "10px",border: "none",cursor: "pointer", background: activeTab === "data" ? "#007bff" : "#ddd",color: activeTab === "data" ? "white" : "black",flex: 1}}>
+                    <button onClick={() => setActiveTab("data")}style={{padding: "10px",border: "none",cursor: "pointer", background: activeTab === "data" ? "#000000" : "#ddd",color: activeTab === "data" ? "white" : "black",flex: 1}}>
                         Data
                     </button>
-                    <button onClick={() => setActiveTab("charts")} style={{padding: "10px",border: "none",cursor: "pointer",background: activeTab === "charts" ? "#007bff" : "#ddd",color: activeTab === "charts" ? "white" : "black",flex: 1}}>
+                    <button onClick={() => setActiveTab("charts")} style={{padding: "10px",border: "none",cursor: "pointer",background: activeTab === "charts" ? "#000000" : "#ddd",color: activeTab === "charts" ? "white" : "black",flex: 1}}>
                         Charts
                     </button>
-                    <button onClick={() => setActiveTab("other")} style={{padding: "10px",border: "none",cursor: "pointer",background: activeTab === "other" ? "#007bff" : "#ddd",color: activeTab === "other" ? "white" : "black",flex: 1}}>
+                    <button onClick={() => setActiveTab("other")} style={{padding: "10px",border: "none",cursor: "pointer",background: activeTab === "other" ? "#000000" : "#ddd",color: activeTab === "other" ? "white" : "black",flex: 1}}>
                         Other
                     </button>
                 </div>
