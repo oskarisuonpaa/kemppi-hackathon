@@ -85,7 +85,7 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
         <div className="container">
           <img className="logo" src="/images/logo.png" alt="" />
           <a className="navbar-brand display-2 tk-myriad-pro" href="#">
-            Team Name
+            Team Spark
           </a>
           <button
             className="navbar-toggler custom-toggler"
