@@ -14,6 +14,11 @@ const userSchema = new mongoose.Schema({
     enum: ["visitor", "admin", "viewer"],
     default: "visitor",
   },
+  group: {
+    type: [String],
+    required: true,
+    default: [],
+  },
 });
 
 userSchema.set("toJSON", {
