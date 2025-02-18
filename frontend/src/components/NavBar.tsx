@@ -109,6 +109,13 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
                 </a>
               </li>
             </ul>
+            <ul className="navbar-nav ms-auto">
+              <li className="nav-item active">
+                <a className="nav-link tk-proxima-nova" href="#charts">
+                  Charts
+                </a>
+              </li>
+            </ul>
 
             <div>
               {isAuthenticated && nimi !== "" ? (
