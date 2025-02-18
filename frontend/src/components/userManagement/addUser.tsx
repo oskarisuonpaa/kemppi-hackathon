@@ -51,7 +51,7 @@ const EditUser = ({ users }: { users: User[] }) => {
     const [name, setName] = useState<string>("");
     const [role, setRole] = useState<string>("viewer");
     const [password, setPassword] = useState<string>("");
-    const [group, setGroup] = useState<string[]>([""]);
+    const [group, setGroup] = useState<string[]>(["", "", ""]);
 
     const handleAddSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -115,7 +115,7 @@ const EditUser = ({ users }: { users: User[] }) => {
                     </select>
                 </label>
                 <label style={{ marginBottom: "10px", fontWeight: "bold" }}>
-                    Password:
+                    Password 8 chars min, 1 number, 1 uppercase, 1 special character:
                     <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: "100%", padding: "8px", marginTop: "5px", marginBottom: "15px", border: "1px solid #ccc", borderRadius: "4px" }} />
                 </label>
                 <input type="submit" value="Submit" style={{ padding: "10px", backgroundColor: "#F57300", color: "white", border: "none", borderRadius: "4px", cursor: "pointer" }} />
