@@ -9,6 +9,7 @@ interface User {
     username: string;
     name: string;
     role: string;
+    group: string[];
 }
 
 const tableStyle: CSSProperties = {
@@ -60,6 +61,7 @@ const AdminPanel = () => {
                         <th style={thStyle}>Username</th>
                         <th style={thStyle}>Name</th>
                         <th style={thStyle}>Role</th>
+                        <th style={thStyle}>Group</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,6 +70,7 @@ const AdminPanel = () => {
                             <td style={tdStyle}>{user.username}</td>
                             <td style={tdStyle}>{user.name}</td>
                             <td style={tdStyle}>{user.role}</td>
+                            <td style={tdStyle}>{user.group}</td>
                         </tr>
                     ))}
                 </tbody>
