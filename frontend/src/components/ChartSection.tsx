@@ -4,7 +4,6 @@ import WeldingTrendsChart from "./WeldingList";
 import WeldingComparisonChart from "./WeldingComparisonChart";
 import WeldingComparisonChartModel from "./WeldingComparisonChartModel";
 import UsedWeldingMachinesChart from "./UsedWeldingMachinesChart";
-import TrendlineChart from "./TrendlineChart";
 import WeeklyConsumptionChart from "./WeeklyConsumptionChart";
 
 
