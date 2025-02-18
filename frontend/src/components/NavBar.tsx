@@ -30,7 +30,6 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
         username,
         password,
       });
-      console.log(response.data.token, username, response.data.role);
       localStorage.setItem("authToken", response.data.token);
       localStorage.setItem("username", username);
       localStorage.setItem("role", response.data.role);
@@ -47,7 +46,6 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
   };
 
   const handleClickVisitor = () => {
-    console.log("Visitor clicked");
     if (localStorage.getItem("role") == "visitor") {
       localStorage.setItem("role", "");
     } else {

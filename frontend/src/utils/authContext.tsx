@@ -36,7 +36,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       setIsAuthenticated(true);
       setKayttajatunnus(initialUsername);
       setRole(initialRole)
-      console.log("initial" + initialUsername + initialRole)
     }
   }, [initialToken, initialUsername, initialRole]);
 
