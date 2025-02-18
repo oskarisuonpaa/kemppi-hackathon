@@ -22,6 +22,7 @@ The project can be run from the root folder by running the following commands:
 - ```npm run init```: This command will install the necessary dependencies for both the frontend and the backend.
 - ```npm run dev```: This command will start the backend and the frontend concurrently.
 
+
 However, the backend and the frontend can also be ran separately. To run the backend, navigate to the backend folder and run the following command:
 ```npm run dev```.
 
