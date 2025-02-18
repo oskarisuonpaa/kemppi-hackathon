@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import WeldingTrendsChart from "./WeldingList";
 import WeldingComparisonChart from "./WeldingComparisonChart";
 import WeldingComparisonChartModel from "./WeldingComparisonChartModel";
+import UsedWeldingMachinesChart from "./UsedWeldingMachinesChart";
 
 
 interface props {
@@ -52,6 +53,7 @@ const ChartSection: React.FC<props> = () => {
     const [error, setError] = useState<string | null>(null);
     const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
     const initialToken = localStorage.getItem("authToken");
+    // Tab selector state
     const [activeTab, setActiveTab] = useState<"data" | "charts" | "other">("data");
 
     useEffect(() => {
@@ -84,13 +86,13 @@ const ChartSection: React.FC<props> = () => {
             <div style={{ margin: "20px", textAlign: "center" }}>
                 {/* Tabs Navigation */}
                 <div style={{ display: "flex", marginBottom: "10px" }}>
-                    <button onClick={() => setActiveTab("data")}style={{padding: "10px",border: "none",cursor: "pointer", background: activeTab === "data" ? "#007bff" : "#ddd",color: activeTab === "data" ? "white" : "black",flex: 1}}>
+                    <button onClick={() => setActiveTab("data")}style={{padding: "10px",border: "none",cursor: "pointer", background: activeTab === "data" ? "#000000" : "#ddd",color: activeTab === "data" ? "white" : "black",flex: 1}}>
                         Data
                     </button>
-                    <button onClick={() => setActiveTab("charts")} style={{padding: "10px",border: "none",cursor: "pointer",background: activeTab === "charts" ? "#007bff" : "#ddd",color: activeTab === "charts" ? "white" : "black",flex: 1}}>
+                    <button onClick={() => setActiveTab("charts")} style={{padding: "10px",border: "none",cursor: "pointer",background: activeTab === "charts" ? "#000000" : "#ddd",color: activeTab === "charts" ? "white" : "black",flex: 1}}>
                         Charts
                     </button>
-                    <button onClick={() => setActiveTab("other")} style={{padding: "10px",border: "none",cursor: "pointer",background: activeTab === "other" ? "#007bff" : "#ddd",color: activeTab === "other" ? "white" : "black",flex: 1}}>
+                    <button onClick={() => setActiveTab("other")} style={{padding: "10px",border: "none",cursor: "pointer",background: activeTab === "other" ? "#000000" : "#ddd",color: activeTab === "other" ? "white" : "black",flex: 1}}>
                         Other
                     </button>
                 </div>
@@ -100,11 +102,13 @@ const ChartSection: React.FC<props> = () => {
                     {activeTab === "data" ? (
                         <WeldingTrendsChart data={weldingData} />
                     ) : activeTab === "charts" ? (
-                        <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        <WeldingComparisonChartModel chartname={"Energy Consumption per Welding Machine"} chartwidth="100%" data={weldingData} />
-                        <WeldingComparisonChart chartname={"Energy Consumption per Welding Machine"} data={weldingData} />
+                        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: "space-between"}}>
+                        <WeldingComparisonChartModel chartname={"Power Consumption (kW)"} chartwidth="100%" data={weldingData} />
+                        <WeldingComparisonChart chartname={"Energy Consumption (Wh)"} data={weldingData} />
+                        <UsedWeldingMachinesChart data={weldingData} />
                         </div>
-                    ) : ""}
+                    ) : <div>
+                        </div>}
                 </div>
             </div>
         </>
