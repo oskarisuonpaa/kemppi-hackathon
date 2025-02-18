@@ -2,8 +2,10 @@
 
 ## Team Members
 
-- Oskari Suonpää
-- Aleksi Sorjonen
+- [Oskari Suonpää](https://github.com/oskarisuonpaa)
+- [Aleksi Sorjonen](https://github.com/SorjonenA)
+- [Sergei Roitonen](https://github.com/roitonen)
+- [Joona Kivelä](https://github.com/Jomppa69)
 
 ## Project Description
 
