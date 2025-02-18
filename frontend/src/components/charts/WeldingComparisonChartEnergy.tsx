@@ -62,7 +62,7 @@ const WeldingComparisonChart: React.FC<WeldingComparisonChartProps> = ({ chartna
     return (
         <div style={{ width: chartwidth ? chartwidth : "49%" }}>
             <h3>{chartname}</h3>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="machine" />
