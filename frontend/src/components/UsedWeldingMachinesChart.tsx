@@ -36,47 +36,44 @@ interface WeldingData {
   };
 }
 
-interface WeldingComparisonChartProps {
-  chartname: string;
-  chartwidth?: string;
+interface Props {
   data: WeldingData[];
 }
 
-const WeldingComparisonChartModel: React.FC<WeldingComparisonChartProps> = ({ chartname, chartwidth, data }) => {
-  // Group data by welding machine and model, and calculate normalized energy consumption
-  const groupedData = data.reduce((acc, curr) => {
+const UsedWeldingMachinesChart: React.FC<Props> = ({ data }) => {
+  // Count the occurrences of each welding machine
+  const machineCount = data.reduce((acc, curr) => {
     const machineKey = `${curr.weldingMachine.name} (${curr.weldingMachine.model})`;
-    const weldDurationHours = curr.weldDurationMs.totalMs / 3600000; // Convert ms to hours
-    const normalizedEnergyConsumption = curr.materialConsumption.energyConsumptionAsWh / weldDurationHours / 1000;
-
     if (!acc[machineKey]) {
       acc[machineKey] = 0;
     }
-    acc[machineKey] += normalizedEnergyConsumption;
+    acc[machineKey]++;
     return acc;
   }, {} as Record<string, number>);
 
-  // Convert grouped data to chart-friendly format
-  const chartData = Object.keys(groupedData).map((name) => ({
-    machine: name,
-    energyConsumption: groupedData[name],
-  }));
+  // Convert the count data to an array and sort it in descending order
+  const chartData = Object.keys(machineCount)
+    .map((name) => ({
+      machine: name,
+      count: machineCount[name],
+    }))
+    .sort((a, b) => b.count - a.count);
 
   return (
-    <div style={{ width: chartwidth ? chartwidth : "45%" }}>
-      <h3>{chartname}</h3>
+    <div style={{ width: '49%' }}>
+      <h3 style={{ fontSize: '1.5em', marginBottom: '10px' }}>Welding Machine Usage Count</h3>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={chartData}>
+        <BarChart layout="vertical" data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="machine" />
-          <YAxis />
+          <XAxis type="number" />
+          <YAxis type="category" dataKey="machine" width={200} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="energyConsumption" fill="#8884d8" name="Energy Consumption (kW)" />
+          <Bar dataKey="count" fill="#8884d8" name="Usage Count" />
         </BarChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-export default WeldingComparisonChartModel;
+export default UsedWeldingMachinesChart;
