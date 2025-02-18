@@ -72,7 +72,7 @@ const WeldingComparisonChartModel: React.FC<WeldingComparisonChartProps> = ({ ch
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="energyConsumption" fill="#8884d8" name="Energy Consumption (kW)" />
+          <Bar dataKey="energyConsumption" fill="#f57300" name="Energy Consumption (kW)" />
         </BarChart>
       </ResponsiveContainer>
     </div>
