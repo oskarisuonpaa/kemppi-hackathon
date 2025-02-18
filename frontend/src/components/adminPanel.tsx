@@ -10,6 +10,7 @@ interface User {
     name: string;
     role: string;
     group: string[];
+    id: string;
 }
 
 const tableStyle: CSSProperties = {
@@ -42,7 +43,6 @@ const AdminPanel = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                console.log(response.data);
 
                 setUsers(response.data);
             } catch (err) {

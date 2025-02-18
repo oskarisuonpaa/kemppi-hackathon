@@ -77,11 +77,11 @@ usersRouter.put("/:id", async (req: Request, res: Response) => {
   const updatedUser = await User.findByIdAndUpdate(
     id,
     {
-      username: username ?? oldUser.username,
-      name: name ?? oldUser.name,
-      passwordHash: password ? await hashedPassword(password) : oldUser.passwordHash,
-      role: role ?? oldUser.role,
-      group: group ?? oldUser.group,
+      username: username && username.trim() !== "" ? username : oldUser.username,
+      name: name && name.trim() !== "" ? name : oldUser.name,
+      passwordHash: password && password.trim() !== "" ? await hashedPassword(password) : oldUser.passwordHash,
+      role: role && role.trim() !== "" ? role : oldUser.role,
+      group: group && group[0] !== "" ? group : oldUser.group,
     },
     { new: true, runValidators: true, context: "query" }
   );
