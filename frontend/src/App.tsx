@@ -1,20 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import NavBar from './components/NavBar'
 import AboutSection from './components/AboutSection'
 import FooterSection from './components/FooterSection'
 import MainSection from './components/MainSection'
 import ServicesSection from './components/ServicesSection'
 import ContactSection from './components/ContactSection'
-import axiosInstance from "./utils/axiosInstance"
 import { useAuth } from "./utils/authContext";
-import { Kayttaja, InitialKayttaja } from './types'
-import LoginSection from './components/LoginSection'
 import ChartSection from './components/ChartSection'
 import VisitorSection from './components/visitorSection'
 
 function App() {
 
-  const [user, setUser] = useState<Kayttaja>(InitialKayttaja);
   const { kayttajatunnus, role, isAuthenticated } = useAuth();
   const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 

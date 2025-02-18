@@ -8,11 +8,10 @@ interface Props {
   role: string | null;
 }
 
-const NavBar: React.FC<Props> = ({ nimi, role }) => {
+const NavBar: React.FC<Props> = ({ nimi }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [message, setMessage] = useState("");
   const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
   const { setKayttajatunnus } = useAuth();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -36,7 +35,6 @@ const NavBar: React.FC<Props> = ({ nimi, role }) => {
       setKayttajatunnus(username);
       window.location.reload();
     } catch (error) {
-      setMessage("Login failed");
     }
   };
 
@@ -106,11 +104,11 @@ const NavBar: React.FC<Props> = ({ nimi, role }) => {
 
             <div>
               {isAuthenticated && nimi !== "" ?
-                <><span style={{color: "gray"}}>Tervetuloa, {nimi} {role}!</span> <button className="logout" onClick={handleLogout}>Logout</button></> :
+                <><span style={{color: "gray", marginLeft: "1.2em", marginRight: "0.6em"}}>Welcome, {nimi}!</span> <button className="logout" onClick={handleLogout}>Logout</button></> :
                 localStorage.getItem("role") === "visitor" ?
                   <button onClick={handleClickVisitor}>Login to see more data</button> :
                   <div style={{ position: "relative", display: "inline-block" }} ref={dropdownRef}>
-                    <button onClick={() => setIsOpen(!isOpen)}>Login</button>
+                    <button style={{marginLeft: "1.2em"}} onClick={() => setIsOpen(!isOpen)}>Login</button>
                     {isOpen && (
                       <form onSubmit={handleSubmit}>
                         <div style={{
