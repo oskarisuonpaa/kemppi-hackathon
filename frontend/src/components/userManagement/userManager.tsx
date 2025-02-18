@@ -25,15 +25,29 @@ const modifyUser = async (oldUser: User, username: string, name: string, role: s
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log("Modified user:", modifiedUser);
         return modifiedUser;
     }
-    
+}
+
+const addUser = async (username: string, name: string, role: string, group: string[], password: string) => {
+    const newUser = await axios.post(`${backendUrl}/api/users`, {
+        username,
+        name,
+        role,
+        group,
+        password
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+    });
+    alert(`User '${username}' has been created successfully.`);
+    return newUser;
 }
 const EditUser = ({ users }: { users: User[] }) => {
     const [username, setUsername] = useState<string>("");
     const [name, setName] = useState<string>("");
-    const [role, setRole] = useState<string>("");
+    const [role, setRole] = useState<string>("viewer");
     const [password, setPassword] = useState<string>("");
     const [group, setGroup] = useState<string[]>([""]);
 
@@ -41,11 +55,13 @@ const EditUser = ({ users }: { users: User[] }) => {
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Submit");
         const oldUser = users.find(user => user.username === username);
         if(oldUser) {
-            console.log("User found");
             modifyUser(oldUser, username, name, role, group, password);
+        } else {
+            if (window.confirm(`Do you want to add user: '${username}'?`)) {
+                addUser(username, name, role, group, password);
+            }
         }
     }
 
@@ -77,25 +93,25 @@ const EditUser = ({ users }: { users: User[] }) => {
                 <label>
                     Group 1
                     <select name="group1" value={group[0]} onChange={(e) => groupChanged(e.target.value, 0)}>
-                        <option value="group1">Group 1</option>
-                        <option value="group2">Group 2</option>
-                        <option value="group3">Group 3</option>
+                        <option value="LAB 1">LAB 1</option>
+                        <option value="LAB 2">LAB 2</option>
+                        <option value="">None</option>
                     </select>
                 </label>
                 <label>
                     Group 2
                     <select name="group2" value={group[1]} onChange={(e) => groupChanged(e.target.value, 1)}>
-                        <option value="group1">Group 1</option>
-                        <option value="group2">Group 2</option>
-                        <option value="group3">Group 3</option>
+                        <option value="LAB 1">LAB 1</option>
+                        <option value="LAB 2">LAB 2</option>
+                        <option value="">None</option>
                     </select>
                     </label>
                     <label>
                         Group 3
                         <select name="group3" value={group[2]} onChange={(e) => groupChanged(e.target.value, 2)}>
-                        <option value="group1">Group 1</option>
-                        <option value="group2">Group 2</option>
-                        <option value="group3">Group 3</option>
+                        <option value="LAB 1">LAB 1</option>
+                        <option value="LAB 2">LAB 2</option>
+                        <option value="">None</option>
                         </select>
                     </label>
                 <label>
