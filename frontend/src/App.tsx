@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import NavBar from "./components/NavBar";
-import AboutSection from "./components/AboutSection";
 import FooterSection from "./components/FooterSection";
 import MainSection from "./components/MainSection";
 import { useAuth } from "./utils/authContext";
@@ -28,13 +27,11 @@ function App() {
     <>
       <NavBar nimi={kayttajatunnus} role={role}></NavBar>
       <MainSection></MainSection>
-      {/* <LoginSection nimi={kayttajatunnus} role={role}></LoginSection> */}
       {role === "visitor" && <VisitorSection></VisitorSection>}
       {(role === "admin" && <ChartSection></ChartSection>) ||
         (role === "viewer" && <ChartSection></ChartSection>)}
 
       {role === "admin" && <AdminPanel></AdminPanel>}
-      <AboutSection></AboutSection>
 
       <FooterSection></FooterSection>
     </>
