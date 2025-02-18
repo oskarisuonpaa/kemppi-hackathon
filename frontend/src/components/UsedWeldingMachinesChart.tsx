@@ -69,7 +69,7 @@ const UsedWeldingMachinesChart: React.FC<Props> = ({ data }) => {
           <YAxis type="category" dataKey="machine" width={200} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="count" fill="#8884d8" name="Usage Count" />
+          <Bar dataKey="count" fill="#f57300" name="Usage Count" />
         </BarChart>
       </ResponsiveContainer>
     </div>

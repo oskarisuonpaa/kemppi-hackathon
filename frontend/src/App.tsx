@@ -10,6 +10,8 @@ import ChartSection from './components/ChartSection'
 import VisitorSection from './components/visitorSection'
 import AdminPanel from './components/adminPanel'
 
+
+
 function App() {
 
   const { kayttajatunnus, role, isAuthenticated } = useAuth();
