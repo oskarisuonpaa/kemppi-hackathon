@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import DeleteUser from "./deleteUser";
 
 const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 const token = localStorage.getItem("authToken");
