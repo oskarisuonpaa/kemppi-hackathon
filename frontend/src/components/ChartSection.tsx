@@ -5,6 +5,8 @@ import WeldingComparisonChart from "./WeldingComparisonChart";
 import WeldingComparisonChartModel from "./WeldingComparisonChartModel";
 import UsedWeldingMachinesChart from "./UsedWeldingMachinesChart";
 import WeeklyConsumptionChart from "./WeeklyConsumptionChart";
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 
 interface props {
@@ -57,6 +59,10 @@ const ChartSection: React.FC<props> = () => {
     // Tab selector state
     const [activeTab, setActiveTab] = useState<"data" | "charts" | "other">("data");
 
+    const [sliderValues, setSliderValues] = useState<[number, number]>([0, 0]);
+    const [minDate, setMinDate] = useState<number | null>(null);
+    const [maxDate, setMaxDate] = useState<number | null>(null);
+
     useEffect(() => {
         const fetchChartData = async () => {
             setLoading(true);
@@ -67,7 +73,20 @@ const ChartSection: React.FC<props> = () => {
                         Authorization: `Bearer ${initialToken}`,
                     },
                 })
+                const data = response.data
                 setWeldingData(response.data);
+                // Extract min and max dates (ignoring time)
+                const dates = data.map(item => {
+                    const date = new Date(item.timestamp);
+                    date.setHours(0, 0, 0, 0); // Set time to midnight
+                    return date.getTime();
+                });
+                const min = Math.min(...dates);
+                const max = Math.max(...dates);
+                setMinDate(min);
+                setMaxDate(max);
+                setSliderValues([min, max]);
+
             } catch (err) {
                 console.error('Error fetching chart data:', err);
                 setError('Failed to fetch chart data.');
@@ -79,6 +98,20 @@ const ChartSection: React.FC<props> = () => {
         fetchChartData();
     }, []);
 
+    const handleSliderChange = (value: number | number[]) => {
+        if (Array.isArray(value)) {
+            setSliderValues(value as [number, number]);
+        }
+    };
+
+    const filteredData = weldingData.filter(item => {
+        const itemDate = new Date(item.timestamp);
+        itemDate.setHours(0, 0, 0, 0); // Set time to midnight
+        const itemTime = itemDate.getTime();
+        return itemTime >= sliderValues[0] && itemTime <= sliderValues[1];
+    });
+
+
     if (loading) return <div>Loading welding data...</div>;
     if (error) return <div>{error}</div>;
 
@@ -87,33 +120,51 @@ const ChartSection: React.FC<props> = () => {
             <div style={{ margin: "20px", textAlign: "center" }}>
                 {/* Tabs Navigation */}
                 <div style={{ display: "flex", marginBottom: "10px" }}>
-                    <button onClick={() => setActiveTab("data")}style={{padding: "10px",border: "none",cursor: "pointer", background: activeTab === "data" ? "#000000" : "#ddd",color: activeTab === "data" ? "white" : "black",flex: 1}}>
+                    <button onClick={() => setActiveTab("data")} style={{ padding: "10px", border: "none", cursor: "pointer", background: activeTab === "data" ? "#000000" : "#ddd", color: activeTab === "data" ? "white" : "black", flex: 1 }}>
                         Data
                     </button>
-                    <button onClick={() => setActiveTab("charts")} style={{padding: "10px",border: "none",cursor: "pointer",background: activeTab === "charts" ? "#000000" : "#ddd",color: activeTab === "charts" ? "white" : "black",flex: 1}}>
+                    <button onClick={() => setActiveTab("charts")} style={{ padding: "10px", border: "none", cursor: "pointer", background: activeTab === "charts" ? "#000000" : "#ddd", color: activeTab === "charts" ? "white" : "black", flex: 1 }}>
                         Charts
                     </button>
-                    <button onClick={() => setActiveTab("other")} style={{padding: "10px",border: "none",cursor: "pointer",background: activeTab === "other" ? "#000000" : "#ddd",color: activeTab === "other" ? "white" : "black",flex: 1}}>
+                    <button onClick={() => setActiveTab("other")} style={{ padding: "10px", border: "none", cursor: "pointer", background: activeTab === "other" ? "#000000" : "#ddd", color: activeTab === "other" ? "white" : "black", flex: 1 }}>
                         Other
                     </button>
                 </div>
 
+                {minDate !== null && maxDate !== null && (
+                    <div>
+                        <Slider
+                            range
+                            min={minDate}
+                            max={maxDate}
+                            value={sliderValues}
+                            onChange={handleSliderChange}
+                            step={86400000} // Step by one day in milliseconds
+                            style={{width:"50%", margin:"auto"}}
+                        />
+                        <div>
+                            <span>Min: {new Date(sliderValues[0]).toLocaleDateString()}</span>
+                            <span>Max: {new Date(sliderValues[1]).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                )}
+
                 {/* Tabs Content */}
-                <div style={{padding: "20px",border: "1px solid #ddd",borderRadius: "5px",background: "#f9f9f9" }}>
+                <div style={{ padding: "20px", border: "1px solid #ddd", borderRadius: "5px", background: "#f9f9f9" }}>
                     {activeTab === "data" ? (
-                        <WeldingTrendsChart data={weldingData} />
+                        <WeldingTrendsChart data={filteredData} />
                     ) : activeTab === "charts" ? (
-                        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: "space-between"}}>
-                        <WeldingComparisonChartModel chartname={"Power Consumption (kW)"} data={weldingData} />
-                        <WeldingComparisonChart chartname={"Energy Consumption (Wh)"} data={weldingData} />
-                        <UsedWeldingMachinesChart data={weldingData} />
-                        <WeeklyConsumptionChart data={weldingData} metric="weldTime" />
-                        <WeeklyConsumptionChart data={weldingData} metric="wireConsumption" />
-                        <WeeklyConsumptionChart data={weldingData} metric="fillerConsumption" />
-                        <WeeklyConsumptionChart data={weldingData} metric="gasConsumption" />
+                        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: "space-between" }}>
+                            <WeldingComparisonChartModel chartname={"Power Consumption (kW)"} data={filteredData} />
+                            <WeldingComparisonChart chartname={"Energy Consumption (Wh)"} data={filteredData} />
+                            <UsedWeldingMachinesChart data={filteredData} />
+                            <WeeklyConsumptionChart data={filteredData} metric="weldTime" />
+                            <WeeklyConsumptionChart data={filteredData} metric="wireConsumption" />
+                            <WeeklyConsumptionChart data={filteredData} metric="fillerConsumption" />
+                            <WeeklyConsumptionChart data={filteredData} metric="gasConsumption" />
                         </div>
                     ) : <div>
-                        </div>}
+                    </div>}
                 </div>
             </div>
         </>

@@ -41,13 +41,26 @@ interface WeldingTrendsChartProps {
   data: WeldingData[];
 }
 
+interface VisibleColumns {
+  energy: boolean;
+  wire: boolean;
+  filler: boolean;
+  gas: boolean;
+  duration: boolean;
+  currentmin: boolean;
+  currentmax: boolean;
+  current: boolean;
+  voltagemin: boolean;
+  voltagemax: boolean;
+  voltage: boolean;
+}
 
 
 const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
 
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" } | null>(null);
 
-  const [visibleColumns, setVisibleColumns] = useState({
+  const [visibleColumns, setVisibleColumns] = useState<VisibleColumns>({
     energy: true,
     wire: true,
     filler: true,
@@ -137,7 +150,7 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
               type="checkbox"
               name={item.name}
               id={item.name}
-              checked={visibleColumns[item.name]}
+              checked={visibleColumns[item.name as keyof VisibleColumns]}
               onChange={handleColumnChange}
             />
             <label className="form-check-label" htmlFor={item.name}>
@@ -211,7 +224,7 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {sortedData.map((item) => (
               <tr key={item._id}>
                 <td>{formatTimestamp(item.timestamp)}</td>
                 <td>{item.weldingMachine.name} ({item.weldingMachine.model})</td>
