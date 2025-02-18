@@ -41,8 +41,8 @@ function App() {
      
       {role === "admin" &&<AdminPanel></AdminPanel>}
       <AboutSection></AboutSection>
-      <ServicesSection></ServicesSection>
-      <ContactSection></ContactSection>
+      {/* <ServicesSection></ServicesSection> */}
+      {/* <ContactSection></ContactSection>s */}
       <FooterSection></FooterSection>
     </>
   )
