@@ -105,11 +105,7 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
             <th onClick={() => handleSort("materialConsumption.fillerConsumptionInGrams")}>Filler Used(g){getSortArrow("materialConsumption.fillerConsumptionInGrams")}</th>
             <th onClick={() => handleSort("materialConsumption.gasConsumptionInLiters")}>Gas Used(L){getSortArrow("materialConsumption.gasConsumptionInLiters")}</th>
             <th onClick={() => handleSort("weldDurationMs.totalMs")}>Weld Duration(ms){getSortArrow("weldDurationMs.totalMs")}</th>
-            <th onClick={() => handleSort("weldingParameters.current.min")}>A(Min){getSortArrow("weldingParameters.current.min")}</th>
-            <th onClick={() => handleSort("weldingParameters.current.max")}>A(Max){getSortArrow("weldingParameters.current.max")}</th>
             <th onClick={() => handleSort("weldingParameters.current.avg")}>A(Avg){getSortArrow("weldingParameters.current.avg")}</th>
-            <th onClick={() => handleSort("weldingParameters.voltage.min")}>V(Min){getSortArrow("weldingParameters.voltage.min")}</th>
-            <th onClick={() => handleSort("weldingParameters.voltage.max")}>V(Max){getSortArrow("weldingParameters.voltage.max")}</th>
             <th onClick={() => handleSort("weldingParameters.voltage.avg")}>V(Avg){getSortArrow("weldingParameters.voltage.avg")}</th>
           </tr>
         </thead>
@@ -123,11 +119,7 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
               <td>{item.materialConsumption.fillerConsumptionInGrams}</td>
               <td>{item.materialConsumption.gasConsumptionInLiters}</td>
               <td>{item.weldDurationMs.totalMs}</td>
-              <td>{item.weldingParameters.current.min}</td>
-              <td>{item.weldingParameters.current.max}</td>
               <td>{item.weldingParameters.current.avg}</td>
-              <td>{item.weldingParameters.voltage.min}</td>
-              <td>{item.weldingParameters.voltage.max}</td>
               <td>{item.weldingParameters.voltage.avg}</td>
             </tr>
           ))}

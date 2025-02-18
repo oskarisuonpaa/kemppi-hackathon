@@ -1,6 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, CSSProperties } from "react";
-import { Background, Border } from "victory";
+import { useEffect, useState, CSSProperties } from "react";
 
 interface BackendDataItem {
     title: string;

@@ -108,12 +108,12 @@ th, td:nth-child(n+3) { /* Center align numerical values */
 }
 
 /* Set specific max-widths for columns */
-th:nth-child(1), td:nth-child(1) { width: 100px; } /* Timestamp */
+th:nth-child(1), td:nth-child(1) { width: 90px; } /* Timestamp */
 th:nth-child(2), td:nth-child(2) { width: 160px; } /* Machine */
 th:nth-child(3) { width: 180px; } /* Other numeric columns */
 th:nth-child(n+4) { width: 110px; } /* Other numeric columns */
 th:nth-child(7) { width: 140px; } /* Other numeric columns */
-th:nth-child(n+8) { width: 80px; } /* Other numeric columns */
+th:nth-child(n+8) { width: 70px; } /* Other numeric columns */
 
 /* Sticky header */
 thead {
