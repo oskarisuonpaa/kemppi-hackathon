@@ -7,13 +7,20 @@ export const dataRouter = Router();
 /**
  * GET /api/data
  * Example query params:
- *   ?model=SuperWelder
- *   &currentMin=50
- *   &currentMax=100
- *   &voltageMin=10
- *   &voltageMax=20
- *   &startDate=2025-01-01
- *   &endDate=2025-01-31
+ * ?model=SuperWelder
+ * &serial=12345
+ * &name=WeldMaster
+ * &group=Welding Department
+ * &currentMin=50
+ * &currentMax=100
+ * &voltageMin=10
+ * &voltageMax=20
+ * &startDate=2025-01-01T00:00:00Z
+ * &endDate=2025-01-02T00:00:00Z
+ *
+ * all query params are optional
+ * numeric values return results which average is within the range
+ * date values return results which timestamp is within the range
  */
 dataRouter.get("/", async (req: Request, res: Response) => {
   const {
