@@ -95,36 +95,38 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
   return (
     <div>
       <h2>Welding Data Trends</h2>
-      <table border={1}>
-        <thead>
-          <tr>
-            <th onClick={() => handleSort("timestamp")}>Timestamp{getSortArrow("timestamp")}</th>
-            <th onClick={() => handleSort("weldingMachine.name")}>Machine{getSortArrow("weldingMachine.name")}</th>
-            <th onClick={() => handleSort("materialConsumption.energyConsumptionAsWh")}>Energy Consumption(Wh){getSortArrow("materialConsumption.energyConsumptionAsWh")}</th>
-            <th onClick={() => handleSort("materialConsumption.wireConsumptionInMeters")}>Wire Used(m){getSortArrow("materialConsumption.wireConsumptionInMeters")}</th>
-            <th onClick={() => handleSort("materialConsumption.fillerConsumptionInGrams")}>Filler Used(g){getSortArrow("materialConsumption.fillerConsumptionInGrams")}</th>
-            <th onClick={() => handleSort("materialConsumption.gasConsumptionInLiters")}>Gas Used(L){getSortArrow("materialConsumption.gasConsumptionInLiters")}</th>
-            <th onClick={() => handleSort("weldDurationMs.totalMs")}>Weld Duration(ms){getSortArrow("weldDurationMs.totalMs")}</th>
-            <th onClick={() => handleSort("weldingParameters.current.avg")}>A(Avg){getSortArrow("weldingParameters.current.avg")}</th>
-            <th onClick={() => handleSort("weldingParameters.voltage.avg")}>V(Avg){getSortArrow("weldingParameters.voltage.avg")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedData.map((item) => (
-            <tr key={item._id}>
-              <td>{formatTimestamp(item.timestamp)}</td>
-              <td>{item.weldingMachine.name} ({item.weldingMachine.model})</td>
-              <td>{item.materialConsumption.energyConsumptionAsWh}</td>
-              <td>{item.materialConsumption.wireConsumptionInMeters}</td>
-              <td>{item.materialConsumption.fillerConsumptionInGrams}</td>
-              <td>{item.materialConsumption.gasConsumptionInLiters}</td>
-              <td>{item.weldDurationMs.totalMs}</td>
-              <td>{item.weldingParameters.current.avg}</td>
-              <td>{item.weldingParameters.voltage.avg}</td>
+      <div className="table-responsive">
+        <table className='table' border={1}>
+          <thead>
+            <tr>
+              <th onClick={() => handleSort("timestamp")}>Timestamp{getSortArrow("timestamp")}</th>
+              <th onClick={() => handleSort("weldingMachine.name")}>Machine{getSortArrow("weldingMachine.name")}</th>
+              <th onClick={() => handleSort("materialConsumption.energyConsumptionAsWh")}>Energy Consumption(Wh){getSortArrow("materialConsumption.energyConsumptionAsWh")}</th>
+              <th onClick={() => handleSort("materialConsumption.wireConsumptionInMeters")}>Wire Used(m){getSortArrow("materialConsumption.wireConsumptionInMeters")}</th>
+              <th onClick={() => handleSort("materialConsumption.fillerConsumptionInGrams")}>Filler Used(g){getSortArrow("materialConsumption.fillerConsumptionInGrams")}</th>
+              <th onClick={() => handleSort("materialConsumption.gasConsumptionInLiters")}>Gas Used(L){getSortArrow("materialConsumption.gasConsumptionInLiters")}</th>
+              <th onClick={() => handleSort("weldDurationMs.totalMs")}>Weld Duration(ms){getSortArrow("weldDurationMs.totalMs")}</th>
+              <th onClick={() => handleSort("weldingParameters.current.avg")}>A(Avg){getSortArrow("weldingParameters.current.avg")}</th>
+              <th onClick={() => handleSort("weldingParameters.voltage.avg")}>V(Avg){getSortArrow("weldingParameters.voltage.avg")}</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedData.map((item) => (
+              <tr key={item._id}>
+                <td>{formatTimestamp(item.timestamp)}</td>
+                <td>{item.weldingMachine.name} ({item.weldingMachine.model})</td>
+                <td>{item.materialConsumption.energyConsumptionAsWh}</td>
+                <td>{item.materialConsumption.wireConsumptionInMeters}</td>
+                <td>{item.materialConsumption.fillerConsumptionInGrams}</td>
+                <td>{item.materialConsumption.gasConsumptionInLiters}</td>
+                <td>{item.weldDurationMs.totalMs}</td>
+                <td>{item.weldingParameters.current.avg}</td>
+                <td>{item.weldingParameters.voltage.avg}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
