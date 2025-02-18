@@ -5,6 +5,7 @@ import WeldingComparisonChart from "./WeldingComparisonChart";
 import WeldingComparisonChartModel from "./WeldingComparisonChartModel";
 import UsedWeldingMachinesChart from "./UsedWeldingMachinesChart";
 import TrendlineChart from "./TrendlineChart";
+import WeeklyConsumptionChart from "./WeeklyConsumptionChart";
 
 
 interface props {
@@ -107,10 +108,10 @@ const ChartSection: React.FC<props> = () => {
                         <WeldingComparisonChartModel chartname={"Power Consumption (kW)"} data={weldingData} />
                         <WeldingComparisonChart chartname={"Energy Consumption (Wh)"} data={weldingData} />
                         <UsedWeldingMachinesChart data={weldingData} />
-                        <TrendlineChart data={weldingData} metric="weldTime" />
-                        <TrendlineChart data={weldingData} metric="wireConsumption" />
-                        <TrendlineChart data={weldingData} metric="fillerConsumption" />
-                        <TrendlineChart data={weldingData} metric="gasConsumption" />
+                        <WeeklyConsumptionChart data={weldingData} metric="weldTime" />
+                        <WeeklyConsumptionChart data={weldingData} metric="wireConsumption" />
+                        <WeeklyConsumptionChart data={weldingData} metric="fillerConsumption" />
+                        <WeeklyConsumptionChart data={weldingData} metric="gasConsumption" />
                         </div>
                     ) : <div>
                         </div>}
