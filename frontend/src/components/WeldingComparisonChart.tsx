@@ -49,7 +49,7 @@ const WeldingComparisonChart: React.FC<WeldingComparisonChartProps> = ({ chartna
         if (!acc[machineName]) {
           acc[machineName] = 0;
         }
-        acc[machineName] += curr.materialConsumption.energyConsumptionAsWh;
+        acc[machineName] += Math.round(curr.materialConsumption.energyConsumptionAsWh);
         return acc;
       }, {} as Record<string, number>);
 

@@ -45,9 +45,9 @@ interface WeldingComparisonChartProps {
 const WeldingComparisonChartModel: React.FC<WeldingComparisonChartProps> = ({ chartname, chartwidth, data }) => {
   // Group data by welding machine and model, and calculate normalized energy consumption
   const groupedData = data.reduce((acc, curr) => {
-    const machineKey = `${curr.weldingMachine.name} (${curr.weldingMachine.model})`;
+    const machineKey = `${curr.weldingMachine.name}`;
     const weldDurationHours = curr.weldDurationMs.totalMs / 3600000; // Convert ms to hours
-    const normalizedEnergyConsumption = curr.materialConsumption.energyConsumptionAsWh / weldDurationHours / 1000;
+    const normalizedEnergyConsumption = Math.round(curr.materialConsumption.energyConsumptionAsWh / weldDurationHours / 1000);
 
     if (!acc[machineKey]) {
       acc[machineKey] = 0;
@@ -72,7 +72,7 @@ const WeldingComparisonChartModel: React.FC<WeldingComparisonChartProps> = ({ ch
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="energyConsumption" fill="#f57300" name="Energy Consumption (kW)" />
+          <Bar dataKey="energyConsumption" fill="#f57300" name="Power Consumption (kW)" />
         </BarChart>
       </ResponsiveContainer>
     </div>
