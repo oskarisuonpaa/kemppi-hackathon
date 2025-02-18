@@ -76,8 +76,8 @@ const AdminPanel = () => {
                         ))}
                     </tbody>
                 </table>
-                <UserManager users={users} />
             </div>
+            <UserManager users={users} />
         </div>
     )
 };
