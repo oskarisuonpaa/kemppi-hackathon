@@ -42,23 +42,7 @@ Testing was implemented on the backend using Jest. To run the tests, navigate to
 
 
 
-# Frontend Application Overview
 
-## Table of Contents
-
-- [Application Structure](#application-structure)
-- [Sections](#sections)
-  - [NavBar](#navbar)
-  - [MainSection](#mainsection)
-  - [ChartSection](#chartsection)
-  - [adminPanel](#adminpanel)
-  - [visitorSection](#visitorsection)
-  - [FooterSection](#footersection)
-- [ChartSection Components](#chartsection-components)
-  - [WeldingList](#weldinglist)
-  - [Charts](#charts)
-- [Authorization](#authorization)
-- [User Management](#user-management)
 
 # Application Structure
 
@@ -115,62 +99,77 @@ Testing was implemented on the backend using Jest. To run the tests, navigate to
   `roleDataFilter.ts` filters the data received from `/api/data` endpoint according to the users groups. 
 
 
+## Frontend Application Overview
+
+### Table of Contents
+
+- [Application Structure](#application-structure)
+- [Sections](#sections)
+  - [NavBar](#navbar)
+  - [MainSection](#mainsection)
+  - [ChartSection](#chartsection)
+  - [adminPanel](#adminpanel)
+  - [visitorSection](#visitorsection)
+  - [FooterSection](#footersection)
+- [ChartSection Components](#chartsection-components)
+  - [WeldingList](#weldinglist)
+  - [Charts](#charts)
+- [Authorization](#authorization)
+- [User Management](#user-management)
    
-The `App.tsx` file controls the rendering logic based on user roles, ensuring that users see content relevant to their permissions.
+  The `App.tsx` file controls the rendering logic based on user roles, ensuring that users see content relevant to their permissions.
 
-## Sections
+  ## Sections
 
-### NavBar
+  ### NavBar
 
-The `NavBar` component contains the login logic, allowing users to authenticate and access the application.
+  The `NavBar` component contains the login logic, allowing users to authenticate and access the application.
 
-### MainSection
+  ### MainSection
 
-The `MainSection` serves as the primary content area, displaying information and components based on the user's role and interactions.
+  The `MainSection` serves as the primary content area, displaying information and components based on the user's role and interactions.
 
-### ChartSection
+  ### ChartSection
 
-The `ChartSection` is dedicated to displaying various charts and data visualizations related to welding operations.
+  The `ChartSection` is dedicated to displaying various charts and data visualizations related to welding operations.
 
-### adminPanel
+  ### adminPanel
 
-The `adminPanel` provides administrative functionalities, allowing admins to manage users and other settings.
+  The `adminPanel` provides administrative functionalities, allowing admins to manage users and other settings.
 
-### visitorSection
+  ### visitorSection
 
-The `visitorSection` is designed for visitors, offering limited access to certain features and information.
+  The `visitorSection` is designed for visitors, offering limited access to certain features and information.
 
-### FooterSection
+  ### FooterSection
 
-The `FooterSection` contains footer information, such as links and copyright details.
+  The `FooterSection` contains footer information, such as links and copyright details.
 
-## ChartSection Components
+  ## ChartSection Components
 
-### WeldingList
+  ### WeldingList
 
-The `WeldingList` component displays a list of welding operations, providing an overview of the data available for visualization.
+  The `WeldingList` component displays a list of welding operations, providing an overview of the data available for visualization.
 
-### Charts
+  ### Charts
 
-- **WeldingComparisonChartEnergy**: Compares energy consumption across different welding operations.
-- **WeldingComparisonChartPower**: Visualizes power usage in welding processes.
-- **UsedWeldingMachinesChart**: Shows the utilization of welding machines over time.
-- **WeeklyConsumptionChart**: Displays weekly consumption metrics, including weld time, wire consumption, filler consumption, and gas consumption.
+  - **WeldingComparisonChartEnergy**: Compares energy consumption across different welding operations.
+  - **WeldingComparisonChartPower**: Visualizes power usage in welding processes.
+  - **UsedWeldingMachinesChart**: Shows the utilization of welding machines over time.
+  - **WeeklyConsumptionChart**: Displays weekly consumption metrics, including weld time, wire consumption, filler consumption, and gas consumption.
 
-## Authorization
+  ## Authorization
 
-### authContext
+  ### authContext
 
-The `authContext` manages user authentication by retrieving the username, token, and role from `localStorage`. This information is used to control what content is rendered based on the user's role.
+  The `authContext` manages user authentication by retrieving the username, token, and role from `localStorage`. This information is used to control what content is rendered based on the user's role.
 
-**Note**: Storing authentication details in `localStorage` is not secure. Consider using more secure storage solutions for production environments.
+  **Note**: Storing authentication details in `localStorage` is not secure. Consider using more secure storage solutions for production environments.
 
-## User Management
+  ## User Management
 
-The `adminPanel` includes user management functionalities, allowing admins to:
+  The `adminPanel` includes user management functionalities, allowing admins to:
 
-- **addUser**: Add new users to the system.
-- **deleteUser**: Remove users from the system.
-- **userManager**: Manage user details and permissions.
-
-This README provides a high-level overview of the frontend application. For more detailed information, refer to the individual component files and their respective documentation.
+  - **addUser**: Add new users to the system.
+  - **deleteUser**: Remove users from the system.
+  - **userManager**: Manage user details and permissions.
