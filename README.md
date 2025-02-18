@@ -39,6 +39,9 @@ To run the frontend, navigate to the frontend folder and run the following comma
 Testing was implemented on the backend using Jest. To run the tests, navigate to the backend folder and run the following command:
 ```npm test```.
 
+
+
+
 # Frontend Application Overview
 
 ## Table of Contents
@@ -57,8 +60,62 @@ Testing was implemented on the backend using Jest. To run the tests, navigate to
 - [Authorization](#authorization)
 - [User Management](#user-management)
 
-## Application Structure
+# Application Structure
 
+## Backend Application Overview
+
+### Table of Contents
+
+
+- [controllers](#controllers)
+  - [data](#data)
+  - [login](#login)
+  - [users](#users)
+  - [visitor](#visitor)
+- [models](#models)
+  - [user](#user)
+  - [weldingData](#weldingData)
+- [utils](#utiös)
+  - [dataHelper](#dataHelper)
+  - [middleware](#middleware)
+  - [roleDataFilter](#roleDataFilter)
+
+  ## controllers
+
+  ### data
+  `data.ts` contains and handles all endpoints that are used for handling the welding data. Also allows extensive filtering of data, which was not implemented in final product.
+
+  ### users
+  `user.ts` contains all endpoints used for creating, modifying, deleting and getting users.
+
+  ### visitor
+  `visitor.ts` contains single endpoint for getting simplified visitor data.
+
+  ### login
+  `login.ts` contains post endpoint for logging in.
+
+  ## models
+
+  ### user
+  `user.ts` contains mongoose schema and model for getting user data from database server.
+
+  ### weldingData
+  `weldingData.ts` contains mongoose schema for data thats received from Kemppi api and a model for database server.
+
+  ## utils
+
+  ### dataHelper
+  `dataHelper.ts` contains functions for manipulating data(at the moment only for visitor endpoint).
+
+  ### middleware
+  `middleware.ts` contains important middleware used in the backend. Logger for requests that is used in backends debugging. Unknown endpoint and errorhandlers are also defined here. 
+  Middleware also contains tokenExtractor and userExtractor functions, which are important for security. tokenExtractor gets the authorization token from requests, confirms its correct and attaches it to the request. userExtractor gets the confirmed token from the request and finds the user with it. User is then attached to the request. `/api/users` and `/api/data` endpoints require user and token to be attached to the request.
+
+  ### roleDataFilter
+  `roleDataFilter.ts` filters the data received from `/api/data` endpoint according to the users groups. 
+
+
+   
 The `App.tsx` file controls the rendering logic based on user roles, ensuring that users see content relevant to their permissions.
 
 ## Sections
