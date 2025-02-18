@@ -99,7 +99,10 @@ const ChartSection: React.FC<props> = () => {
                     {activeTab === "data" ? (
                         <WeldingTrendsChart data={weldingData} />
                     ) : activeTab === "charts" ? (
-                        <WeldingComparisonChart data={weldingData} />
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <WeldingComparisonChart chartname={"Energy Consumption per Welding Machine"} data={weldingData} />
+                        <WeldingComparisonChart chartname={"Energy Consumption per Welding Machine"} data={weldingData} />
+                        </div>
                     ) : ""}
                 </div>
             </div>
