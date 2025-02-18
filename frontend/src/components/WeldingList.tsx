@@ -60,6 +60,7 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
 
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" } | null>({key:"timestamp",direction:"asc"});
 
+  // visible columns states tell react what columns should be visible
   const [visibleColumns, setVisibleColumns] = useState<VisibleColumns>({
     energy: true,
     wire: true,
@@ -87,6 +88,7 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
     return path.split(".").reduce((acc, part) => acc && acc[part], obj);
   };
 
+  // handlesort handles the label pressing in the table
   const handleSort = (key: string) => {
     let direction: "asc" | "desc" = "asc";
     if (sortConfig?.key === key && sortConfig.direction === "asc") {
@@ -95,6 +97,7 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
     setSortConfig({ key, direction });
   };
 
+  // formats the time to finnish dates in table
   const formatTimestamp = (isoString: string) => {
     const date = new Date(isoString);
     return date.toLocaleString("fi-FI", {
@@ -104,11 +107,13 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
     });
   };
 
+  // gets correct arrow for table when sorting
   const getSortArrow = (key: string) => {
     if (sortConfig?.key !== key) return "";
     return sortConfig.direction === "asc" ? " ▲" : " ▼";
   };
 
+  // sorts the data according to the sort direction and key
   const sortedData = [...data].sort((a, b) => {
     if (!sortConfig) return 0;
     const valueA = getNestedValue(b, sortConfig.key);
