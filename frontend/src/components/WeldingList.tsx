@@ -218,7 +218,8 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
           Voltage (Avg)
         </label>
       </div>
-      <table border={1}>
+      <div className="table-responsive">
+        <table className='table' border={1}>
         <thead>
           <tr>
             <th onClick={() => handleSort("timestamp")}>Timestamp{getSortArrow("timestamp")}</th>
@@ -281,7 +282,7 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {sortedData.map((item) => (
+          {data.map((item) => (
             <tr key={item._id}>
               <td>{formatTimestamp(item.timestamp)}</td>
               <td>{item.weldingMachine.name} ({item.weldingMachine.model})</td>
@@ -299,7 +300,9 @@ const WeldingTrendsChart: React.FC<WeldingTrendsChartProps> = ({ data }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
+
     </div>
   );
 };
