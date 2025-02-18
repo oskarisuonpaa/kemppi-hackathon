@@ -12,7 +12,7 @@ interface User {
 const UserManager = ({ users }: { users: User[] }) => {
     return (
         <>
-            <div>
+            <div id="user_edits">
                 <h1>User Manager</h1>
                 <EditUser users={users} />
             </div>
