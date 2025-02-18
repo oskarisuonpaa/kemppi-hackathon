@@ -8,6 +8,7 @@ import ContactSection from './components/ContactSection'
 import { useAuth } from "./utils/authContext";
 import ChartSection from './components/ChartSection'
 import VisitorSection from './components/visitorSection'
+import AdminPanel from './components/adminPanel'
 
 function App() {
 
@@ -34,7 +35,9 @@ function App() {
       <MainSection></MainSection>
       {/* <LoginSection nimi={kayttajatunnus} role={role}></LoginSection> */}
       {role === "visitor" && <VisitorSection></VisitorSection>}
-      <ChartSection></ChartSection>
+      {role === "admin" && <ChartSection></ChartSection> || role === "viewer" &&<ChartSection></ChartSection>}
+     
+      <AdminPanel></AdminPanel>
       <AboutSection></AboutSection>
       <ServicesSection></ServicesSection>
       <ContactSection></ContactSection>
