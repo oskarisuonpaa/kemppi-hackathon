@@ -62,7 +62,7 @@ const UsedWeldingMachinesChart: React.FC<Props> = ({ data }) => {
   return (
     <div style={{ width: '49%' }}>
       <h3 style={{ fontSize: '1.5em', marginBottom: '10px' }}>Welding Machine Usage Count</h3>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={400}>
         <BarChart layout="vertical" data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" />

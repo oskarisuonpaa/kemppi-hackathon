@@ -108,7 +108,7 @@ const WeeklyConsumptionChart: React.FC<TrendlineChartProps> = ({ data, metric })
     weldTime: 'Total Weld Time (s)',
     wireConsumption: 'Total Wire Consumption (m)',
     fillerConsumption: 'Total Filler Consumption (g)',
-    gasConsumption: 'Total Gas Consumption (L)',
+    gasConsumption: 'Total Gas Consumption (l)',
   };
 
   return (
