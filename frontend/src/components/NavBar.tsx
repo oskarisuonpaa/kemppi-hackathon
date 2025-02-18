@@ -156,7 +156,7 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
                           <button type="submit" className="login_btn btn btn-dark" style={{color: 'white', width: '100%', marginTop: '1rem' }}>
                             Login
                           </button>
-                          <button className="login_btn btn btn-outline-dark" onClick={handleClickVisitor}>Continue as visitor</button>
+                          <button className="login_bttn btn btn-outline-dark" onClick={handleClickVisitor}>Continue as visitor</button>
                         </div>
                       </form>
                     )}

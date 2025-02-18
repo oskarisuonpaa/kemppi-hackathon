@@ -25,6 +25,11 @@ body {
   width: 100%;
 }
 
+.login_bttn {
+  margin: 10px 0;
+  width: 100%;
+}
+
 /* hero background image */
 .bgimage {
   height: 100vh;
