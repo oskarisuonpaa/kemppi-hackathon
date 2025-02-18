@@ -85,3 +85,9 @@ usersRouter.put("/:id", async (req: Request, res: Response) => {
 
   res.json(updatedUser);
 });
+
+usersRouter.delete("/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await User.findByIdAndDelete(id);
+  res.status(204).end();
+});
