@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import WeldingTrendsChart from "./WeldingList";
 import WeldingComparisonChart from "./WeldingComparisonChart";
+import WeldingComparisonChartModel from "./WeldingComparisonChartModel";
 
 
 interface props {
@@ -99,8 +100,8 @@ const ChartSection: React.FC<props> = () => {
                     {activeTab === "data" ? (
                         <WeldingTrendsChart data={weldingData} />
                     ) : activeTab === "charts" ? (
-                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <WeldingComparisonChart chartname={"Energy Consumption per Welding Machine"} data={weldingData} />
+                        <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                        <WeldingComparisonChartModel chartname={"Energy Consumption per Welding Machine"} chartwidth="100%" data={weldingData} />
                         <WeldingComparisonChart chartname={"Energy Consumption per Welding Machine"} data={weldingData} />
                         </div>
                     ) : ""}
