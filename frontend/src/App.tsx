@@ -37,7 +37,7 @@ function App() {
       {role === "visitor" && <VisitorSection></VisitorSection>}
       {role === "admin" && <ChartSection></ChartSection> || role === "viewer" &&<ChartSection></ChartSection>}
      
-      <AdminPanel></AdminPanel>
+      {role === "admin" &&<AdminPanel></AdminPanel>}
       <AboutSection></AboutSection>
       <ServicesSection></ServicesSection>
       <ContactSection></ContactSection>
