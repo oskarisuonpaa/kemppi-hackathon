@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import WeldingTrendsChart from "./WeldingList";
-import WeldingComparisonChart from "./WeldingComparisonChart";
-import WeldingComparisonChartModel from "./WeldingComparisonChartModel";
-import UsedWeldingMachinesChart from "./UsedWeldingMachinesChart";
-import WeeklyConsumptionChart from "./WeeklyConsumptionChart";
+import WeldingComparisonChartEnergy from "./charts/WeldingComparisonChartEnergy";
+import WeldingComparisonChartPower from "./charts/WeldingComparisonChartPower";
+import UsedWeldingMachinesChart from "./charts/UsedWeldingMachinesChart";
+import WeeklyConsumptionChart from "./charts/WeeklyConsumptionChart";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
@@ -155,8 +155,8 @@ const ChartSection: React.FC<props> = () => {
                         <WeldingTrendsChart data={filteredData} />
                     ) : activeTab === "charts" ? (
                         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: "space-between" }}>
-                            <WeldingComparisonChartModel chartname={"Power Consumption (kW)"} data={filteredData} />
-                            <WeldingComparisonChart chartname={"Energy Consumption (Wh)"} data={filteredData} />
+                            <WeldingComparisonChartPower chartname={"Power Consumption (kW)"} data={filteredData} />
+                            <WeldingComparisonChartEnergy chartname={"Energy Consumption (Wh)"} data={filteredData} />
                             <UsedWeldingMachinesChart data={filteredData} />
                             <WeeklyConsumptionChart data={filteredData} metric="weldTime" />
                             <WeeklyConsumptionChart data={filteredData} metric="wireConsumption" />
