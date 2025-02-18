@@ -104,61 +104,67 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
 
             <div>
               {isAuthenticated && nimi !== "" ?
-                <><span style={{color: "#f57300", marginLeft: "1.2em", marginRight: "0.6em"}}>Welcome, {nimi}!</span> <button className="logout btn" onClick={handleLogout}>Logout</button></> :
+                <><span style={{ color: "#f57300", marginLeft: "1.2em", marginRight: "0.6em" }}>Welcome, {nimi}!</span> <button className="logout btn" onClick={handleLogout}>Logout</button></> :
                 localStorage.getItem("role") === "visitor" ?
                   <button className="login_btn btn btn-outline-dark" onClick={handleClickVisitor}>Login to see more data</button> :
                   <div style={{ position: "relative", display: "inline-block" }} ref={dropdownRef}>
-                    <button className="login_btn btn btn-outline-dark" style={{marginLeft: "1.2em"}} onClick={() => setIsOpen(!isOpen)}>Login</button>
+                    <button className="login_btn btn btn-outline-dark" style={{ marginLeft: "1.2em" }} onClick={() => setIsOpen(!isOpen)}>Login</button>
                     {isOpen && (
-                      <form onSubmit={handleSubmit}>
-                        <div style={{
-                          position: "absolute",
-                          top: "100%",
-                          right: 0,
-                          marginTop: "8px",
-                          padding: "12px",
-                          background: "white",
-                          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                          borderRadius: "6px",
-                          zIndex: 10,
-                          minWidth: "200px",
-                        }}>
-                          <label htmlFor="username">Käyttäjätunnus</label>
-                          <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            placeholder="Käyttäjätunnus"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                          />
-                          <div style={{ marginTop: '1rem' }}>
-                            <label htmlFor="password">Salasana</label>
-                            <div>
+                      <form onSubmit={handleSubmit} className="position-relative">
+                        <div className="position-absolute top-100 end-0 mt-2 p-3 bg-white shadow rounded" style={{ minWidth: "250px", zIndex: 10 }}>
+
+                          {/* Käyttäjätunnus */}
+                          <div className="mb-3">
+                            <label htmlFor="username" className="form-label fw-bold">Käyttäjätunnus</label>
+                            <input
+                              type="text"
+                              id="username"
+                              name="username"
+                              className="form-control"
+                              placeholder="Käyttäjätunnus"
+                              value={username}
+                              onChange={(e) => setUsername(e.target.value)}
+                              required
+                            />
+                          </div>
+
+                          {/* Salasana + Checkbox */}
+                          <div className="mb-3">
+                            <label htmlFor="password" className="form-label fw-bold">Salasana</label>
+                            <div className="input-group">
                               <input
-                                type={showPassword ? 'text' : 'password'}
+                                type={showPassword ? "text" : "password"}
                                 id="password"
                                 name="password"
+                                className="form-control"
                                 placeholder="Salasana"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                               />
-                              <button
-                                type="button"
-                                style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', height: '1.75rem', fontSize: 'small' }}
-                                onClick={togglePasswordVisibility}>
-                                {showPassword ? 'Hide' : 'Show'}
-                              </button>
+                              <div className="input-group-text">
+                                <input
+                                  type="checkbox"
+                                  id="showPassword"
+                                  checked={showPassword}
+                                  onChange={togglePasswordVisibility}
+                                />
+                              </div>
                             </div>
+                            <label htmlFor="showPassword" className="form-check-label mt-1">Näytä salasana</label>
                           </div>
-                          <button type="submit" className="login_btn btn btn-dark" style={{color: 'white', width: '100%', marginTop: '1rem' }}>
+
+                          {/* Napit */}
+                          <button type="submit" className="btn btn-dark w-100 fw-bold mb-2">
                             Login
                           </button>
-                          <button className="login_bttn btn btn-outline-dark" onClick={handleClickVisitor}>Continue as visitor</button>
+                          <button type="button" className="btn btn-outline-dark w-100 fw-bold" onClick={handleClickVisitor}>
+                            Continue as visitor
+                          </button>
+
                         </div>
                       </form>
+
                     )}
                   </div>}
             </div>
