@@ -108,11 +108,6 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
                   Home
                 </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link tk-proxima-nova" href="#about">
-                  Data
-                </a>
-              </li>
             </ul>
 
             <div>
@@ -145,7 +140,6 @@ const NavBar: React.FC<Props> = ({ nimi }) => {
                 >
                   <button
                     className="login_btn btn btn-outline-dark"
-                    style={{ marginLeft: "1.2em" }}
                     onClick={() => setIsOpen(!isOpen)}
                   >
                     Login

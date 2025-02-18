@@ -28,7 +28,6 @@ function App() {
     <>
       <NavBar nimi={kayttajatunnus} role={role}></NavBar>
       <MainSection></MainSection>
-      {/* <LoginSection nimi={kayttajatunnus} role={role}></LoginSection> */}
       {role === "visitor" && <VisitorSection></VisitorSection>}
       {(role === "admin" && <ChartSection></ChartSection>) ||
         (role === "viewer" && <ChartSection></ChartSection>)}
